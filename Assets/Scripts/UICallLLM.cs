@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using Guizan.LLM;
 
 public class UICallLLM : MonoBehaviour
 {
@@ -12,12 +13,22 @@ public class UICallLLM : MonoBehaviour
     [SerializeField]
     private Button sendButton;
 
+    [Space]
+    [SerializeField]
+    private GroqLLM LLMManager;
+
 
     private bool WaitResponse = false;
 
     private void OnEnable()
     {
         sendButton.onClick.AddListener(CallLLM);
+        if (LLMManager == null)
+        {
+            Debug.LogError("manager não encontrado");
+            return;
+        }
+        LLMManager.ResponseEvent.AddListener(ReceiveResponse);
     }
 
     void Start()
@@ -36,14 +47,21 @@ public class UICallLLM : MonoBehaviour
 
     private void CallLLM()
     {
+        if (LLMManager == null)
+        {
+            Debug.LogError("manager não encontrado");
+            return;
+        }
+
         string text = inputField.text;
         if (text.Equals(string.Empty))
             return;
 
         // send data to script
-        Debug.Log("ENVIOU: "+text);
+        LLMManager.SendMessageToLLM(text);
+        //Debug.Log("ENVIOU: "+text);
         ChangeWaitResponse(true);
-        MockReponseTime(3f);
+        //MockReponseTime(3f);
     }
 
     private void MockReponseTime(float time)
@@ -64,6 +82,19 @@ public class UICallLLM : MonoBehaviour
         if (!val) inputField.text = "";
     }
 
+    private void ReceiveResponse(ResponseLLM response)
+    {
+        if(response.type == ResponseType.Success)
+        {
+            PrintLLMAnswer(response.responseText);
+        }
+        else
+        {
+            Debug.LogError(response.responseText);
+        }
+        ChangeWaitResponse(false);
+    }
+
     private void PrintLLMAnswer(string resp)
     {
         textBox.text = resp;
@@ -71,5 +102,6 @@ public class UICallLLM : MonoBehaviour
     private void OnDisable()
     {
         sendButton.onClick.RemoveListener(CallLLM);
+        LLMManager.ResponseEvent.RemoveListener(ReceiveResponse);
     }
 }

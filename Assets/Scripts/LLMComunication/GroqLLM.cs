@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using System.Text;
 using Guizan.API;
 using Guizan.LLM.Utils;
+using UnityEngine.Events;
 
 namespace Guizan.LLM
 {
@@ -15,6 +16,9 @@ namespace Guizan.LLM
         [SerializeField]
         private APIKeyConfig groqKey;
 
+        [Space, SerializeField]
+        public UnityEvent<ResponseLLM> ResponseEvent;
+
 
         private string apiKey;
         private void Awake()
@@ -22,16 +26,16 @@ namespace Guizan.LLM
             apiKey = groqKey.Key;
         }
 
-        public void EnviarMensagem(string textoUsuario)
+        public void SendMessageToLLM(string textoUsuario)
         {
-            StartCoroutine(EnviarParaGroq(textoUsuario));
+            StartCoroutine(SendToGroq(textoUsuario));
         }
 
-        IEnumerator EnviarParaGroq(string textoUsuario)
+        IEnumerator SendToGroq(string textoUsuario)
         {
             var mensagens = new List<Message>
         {
-            new Message { role = "system", content = "System Text" },
+            new Message { role = "system", content = "Você é um assistente que responde de forma clara e direta, usando apenas texto. Não use emojis nem emoticons em nenhuma resposta." },
             new Message { role = "user", content = textoUsuario }
         };
 
@@ -60,15 +64,24 @@ namespace Guizan.LLM
 
             yield return request.SendWebRequest();
 
+            ResponseLLM response = new();
             if (request.result == UnityWebRequest.Result.Success)
             {
                 string respostaJson = request.downloadHandler.text;
-                Debug.Log("Resposta da IA: " + respostaJson.ExtractLLMMessage());
+                //Debug.Log("Resposta da IA: " + respostaJson.ExtractLLMMessage());
+
+                response.type = ResponseType.Success;
+                response.responseText = respostaJson.ExtractLLMMessage();
             }
             else
             {
-                Debug.LogError("Erro ao enviar para a Groq: " + request.error);
+                //Debug.LogError("Erro ao enviar para a Groq: " + request.error);
+
+                response.type = ResponseType.Error;
+                response.responseText = request.error;
             }
+
+            ResponseEvent.Invoke(response);
         }
     }
 }
