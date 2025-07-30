@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections;
 using Guizan.LLM;
+using NaughtyAttributes;
 
 public class UICallLLM : MonoBehaviour
 {
@@ -84,6 +85,9 @@ public class UICallLLM : MonoBehaviour
 
     private void ReceiveResponse(ResponseLLM response)
     {
+        if (response.function == ResponseFunction.System)
+            return;
+
         if(response.type == ResponseType.Success)
         {
             PrintLLMAnswer(response.responseText);

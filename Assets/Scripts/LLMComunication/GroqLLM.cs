@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Networking;
-using System.Text;
 using Guizan.API;
 using Guizan.LLM.Utils;
+using NaughtyAttributes;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Networking;
 
 namespace Guizan.LLM
 {
@@ -19,38 +20,30 @@ namespace Guizan.LLM
         [Space, SerializeField]
         public UnityEvent<ResponseLLM> ResponseEvent;
 
+        [Space(10f)]
+        [SerializeField, Expandable]
+        private ChatRequest requestConfig;
 
         private string apiKey;
+
+        public ChatRequest RequestCofig => requestConfig;
         private void Awake()
         {
             apiKey = groqKey.Key;
         }
 
-        public void SendMessageToLLM(string textoUsuario)
+        public void SendMessageToLLM(string textoUsuario, ResponseFunction function = ResponseFunction.User)
         {
-            StartCoroutine(SendToGroq(textoUsuario));
+            StartCoroutine(SendToGroq(textoUsuario, function));
         }
 
-        IEnumerator SendToGroq(string textoUsuario)
+        IEnumerator SendToGroq(string textoUsuario, ResponseFunction function = ResponseFunction.User)
         {
-            var mensagens = new List<Message>
-        {
-            new Message { role = "system", content = "Você é um assistente que responde de forma clara e direta, usando apenas texto. Não use emojis nem emoticons em nenhuma resposta." },
-            new Message { role = "user", content = textoUsuario }
-        };
+            requestConfig.AddMessage(new("user", textoUsuario));
 
-            var requisicao = new ChatRequest
-            {
-                messages = mensagens,
-                model = "gemma2-9b-it",
-                temperature = 1f,
-                max_completion_tokens = 1024,
-                top_p = 1f,
-                stream = false,
-                stop = null // ou deixe como "" se necessário
-            };
+            var requestConfigs = requestConfig;
 
-            string jsonPayload = JsonUtility.ToJson(requisicao);
+            string jsonPayload = JsonUtility.ToJson(requestConfigs);
 
             // Corrige campos faltando do JsonUtility (como null e arrays)
             jsonPayload = jsonPayload.Replace("\"stop\":\"\"", "\"stop\":null");
@@ -64,14 +57,19 @@ namespace Guizan.LLM
 
             yield return request.SendWebRequest();
 
-            ResponseLLM response = new();
+            ResponseLLM response = new()
+            {
+                function = function
+            };
+
             if (request.result == UnityWebRequest.Result.Success)
             {
-                string respostaJson = request.downloadHandler.text;
+                string answerJson = request.downloadHandler.text;
                 //Debug.Log("Resposta da IA: " + respostaJson.ExtractLLMMessage());
 
                 response.type = ResponseType.Success;
-                response.responseText = respostaJson.ExtractLLMMessage();
+                response.responseText = answerJson.ExtractLLMMessage();
+                requestConfig.AddMessage(new("assistant", response.responseText));
             }
             else
             {
