@@ -7,10 +7,11 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
+using Game.Util;
 
 namespace Guizan.LLM
 {
-    public class GroqLLM : MonoBehaviour
+    public class GroqLLM : Singleton<GroqLLM>
     {
         private const string apiUrl = "https://api.groq.com/openai/v1/chat/completions";
 
@@ -18,32 +19,27 @@ namespace Guizan.LLM
         private APIKeyConfig groqKey;
 
         [Space, SerializeField]
-        public UnityEvent<ResponseLLM> ResponseEvent;
-
-        [Space(10f)]
-        [SerializeField, Expandable]
-        private ChatRequest requestConfig;
+        public static UnityEvent<ResponseLLM> ResponseEvent;
 
         private string apiKey;
 
-        public ChatRequest RequestCofig => requestConfig;
-        private void Awake()
+
+        protected override void Awake()
         {
+            base.Awake();
             apiKey = groqKey.Key;
+            ResponseEvent = new();
         }
 
-        public void SendMessageToLLM(string textoUsuario, ResponseFunction function = ResponseFunction.User)
+        public static void SendMessageToLLM(AgentConfigs agent, Message userMessage)
         {
-            StartCoroutine(SendToGroq(textoUsuario, function));
+            agent.AddMessage(userMessage);
+            Instance.StartCoroutine(Instance.SendToGroq(agent));
         }
 
-        IEnumerator SendToGroq(string textoUsuario, ResponseFunction function = ResponseFunction.User)
+        IEnumerator SendToGroq(AgentConfigs agent)
         {
-            requestConfig.AddMessage(new("user", textoUsuario));
-
-            var requestConfigs = requestConfig;
-
-            string jsonPayload = JsonUtility.ToJson(requestConfigs);
+            string jsonPayload = JsonUtility.ToJson(agent.GetRequest());
 
             // Corrige campos faltando do JsonUtility (como null e arrays)
             jsonPayload = jsonPayload.Replace("\"stop\":\"\"", "\"stop\":null");
@@ -59,17 +55,14 @@ namespace Guizan.LLM
 
             ResponseLLM response = new()
             {
-                function = function
+                AgentID = agent.AgentID
             };
 
             if (request.result == UnityWebRequest.Result.Success)
             {
                 string answerJson = request.downloadHandler.text;
-                //Debug.Log("Resposta da IA: " + respostaJson.ExtractLLMMessage());
-
                 response.type = ResponseType.Success;
                 response.responseText = answerJson.ExtractLLMMessage();
-                requestConfig.AddMessage(new("assistant", response.responseText));
             }
             else
             {
@@ -79,6 +72,7 @@ namespace Guizan.LLM
                 response.responseText = request.error;
             }
 
+            //Debug.Log(response);
             ResponseEvent.Invoke(response);
         }
     }

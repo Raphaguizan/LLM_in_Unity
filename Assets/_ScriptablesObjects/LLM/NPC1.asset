@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae257f48b924be4439c962fe09917642, type: 3}
-  m_Name: ResquestConfigs
+  m_Script: {fileID: 11500000, guid: 28df4300230caec478723f2d2ea0f41f, type: 3}
+  m_Name: NPC1
   m_EditorClassIdentifier: 
+  agentID: NPC1
   messages:
   - role: system
     content: "Voc\xEA \xE9 um assistente que responde de forma clara e direta, usando
@@ -21,4 +22,7 @@ MonoBehaviour:
   max_completion_tokens: 1024
   top_p: 1
   stream: 0
-  stop: 
+  stop: '[stopMessage]'
+  MessagesChangeEvent:
+    m_PersistentCalls:
+      m_Calls: []

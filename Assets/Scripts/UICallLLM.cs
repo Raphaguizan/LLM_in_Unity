@@ -16,7 +16,7 @@ public class UICallLLM : MonoBehaviour
 
     [Space]
     [SerializeField]
-    private GroqLLM LLMManager;
+    private LLMAgent agent;
 
 
     private bool WaitResponse = false;
@@ -24,12 +24,12 @@ public class UICallLLM : MonoBehaviour
     private void OnEnable()
     {
         sendButton.onClick.AddListener(CallLLM);
-        if (LLMManager == null)
+        if (agent == null)
         {
-            Debug.LogError("manager não encontrado");
+            Debug.LogError("Agente não encontrado");
             return;
         }
-        LLMManager.ResponseEvent.AddListener(ReceiveResponse);
+        agent.AnswerEvent.AddListener(PrintLLMAnswer);
     }
 
     void Start()
@@ -48,9 +48,9 @@ public class UICallLLM : MonoBehaviour
 
     private void CallLLM()
     {
-        if (LLMManager == null)
+        if (agent == null)
         {
-            Debug.LogError("manager não encontrado");
+            Debug.LogError("Agente não encontrado");
             return;
         }
 
@@ -59,8 +59,7 @@ public class UICallLLM : MonoBehaviour
             return;
 
         // send data to script
-        LLMManager.SendMessageToLLM(text);
-        //Debug.Log("ENVIOU: "+text);
+        agent.ReceiveText(text);
         ChangeWaitResponse(true);
         //MockReponseTime(3f);
     }
@@ -83,29 +82,14 @@ public class UICallLLM : MonoBehaviour
         if (!val) inputField.text = "";
     }
 
-    private void ReceiveResponse(ResponseLLM response)
-    {
-        if (response.function == ResponseFunction.System)
-            return;
-
-        if(response.type == ResponseType.Success)
-        {
-            PrintLLMAnswer(response.responseText);
-        }
-        else
-        {
-            Debug.LogError(response.responseText);
-        }
-        ChangeWaitResponse(false);
-    }
-
     private void PrintLLMAnswer(string resp)
     {
         textBox.text = resp;
+        ChangeWaitResponse(false);
     }
     private void OnDisable()
     {
         sendButton.onClick.RemoveListener(CallLLM);
-        LLMManager.ResponseEvent.RemoveListener(ReceiveResponse);
+        agent.AnswerEvent.RemoveListener(PrintLLMAnswer);
     }
 }

@@ -391,6 +391,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 221016987}
   m_CullTransparentMesh: 1
+--- !u!1 &237956273
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 237956276}
+  - component: {fileID: 237956275}
+  - component: {fileID: 237956274}
+  m_Layer: 0
+  m_Name: NPC1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &237956274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237956273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b838bcb7d3c690c4fbdfd6aa913199bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  memoryTotalLenght: 50
+--- !u!114 &237956275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237956273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809c2dddb54eef74eb2d8396c1c9569e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMessage: "Desculpe. N\xE3o posso falar agora, volte outra hora."
+  myConfigs: {fileID: 11400000, guid: d0c8e9875254c5a4394ae43a0c8cf6f3, type: 2}
+  AnswerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &237956276
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237956273}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1002.8501, y: 242.6879, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &504081254
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,6 +823,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533157268}
   m_CullTransparentMesh: 1
+--- !u!1 &543732417
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 543732420}
+  - component: {fileID: 543732419}
+  - component: {fileID: 543732418}
+  m_Layer: 0
+  m_Name: NPC2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &543732418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543732417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b838bcb7d3c690c4fbdfd6aa913199bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  memoryTotalLenght: 50
+--- !u!114 &543732419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543732417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809c2dddb54eef74eb2d8396c1c9569e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMessage: Sai daqui !!!
+  myConfigs: {fileID: 11400000, guid: 4dafbd0f27f0aee4e88b2696b5091a1c, type: 2}
+  AnswerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &543732420
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543732417}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1002.8501, y: 242.6879, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1548,7 +1674,7 @@ MonoBehaviour:
   inputField: {fileID: 1200646199}
   textBox: {fileID: 693009401}
   sendButton: {fileID: 1490401543}
-  LLMManager: {fileID: 2043220178}
+  agent: {fileID: 237956275}
 --- !u!114 &1707982341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1819,7 +1945,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2043220179}
   - component: {fileID: 2043220178}
-  - component: {fileID: 2043220180}
   m_Layer: 0
   m_Name: LLMManager
   m_TagString: Untagged
@@ -1840,10 +1965,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groqKey: {fileID: 11400000, guid: 2281fcede3605ff408025359d16e7977, type: 2}
-  ResponseEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  requestConfig: {fileID: 11400000, guid: d22dca29f6053b64295e909c81540e91, type: 2}
 --- !u!4 &2043220179
 Transform:
   m_ObjectHideFlags: 0
@@ -1859,20 +1980,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2043220180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043220177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b838bcb7d3c690c4fbdfd6aa913199bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LLMManager: {fileID: 2043220178}
-  memoryTotalLenght: 30
 --- !u!1 &2107491637
 GameObject:
   m_ObjectHideFlags: 0
@@ -1984,3 +2091,5 @@ SceneRoots:
   - {fileID: 2107491641}
   - {fileID: 1820800380}
   - {fileID: 2043220179}
+  - {fileID: 237956276}
+  - {fileID: 543732420}

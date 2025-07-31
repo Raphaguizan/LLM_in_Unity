@@ -1,14 +1,16 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using NaughtyAttributes;
+using UnityEngine.Events;
+
 
 namespace Guizan.LLM
 {
-    [Serializable]
-    [CreateAssetMenu(fileName = "ResquestConfigs", menuName = "LLM/RequestConfig")]
-    public class ChatRequest : ScriptableObject
+    [CreateAssetMenu(fileName = "NewAgentConfig", menuName = "LLM/AgentConfig")]
+    public class AgentConfigs : ScriptableObject
     {
+        [SerializeField]
+        private string agentID;
+
         [SerializeField]
         private List<Message> messages;
         [SerializeField]
@@ -26,12 +28,22 @@ namespace Guizan.LLM
         private string stop = null;
 
 
+        [Space]
+        public UnityEvent<string> MessagesChangeEvent;
+
+        public string AgentID => agentID;
         public List<Message> Messages => messages;
         public int Lenght => Messages.Count;
+
+        private void Awake()
+        {
+            MessagesChangeEvent = new();
+        }
 
         public void LoadMessages(List<Message> messages)
         {
             this.messages = messages;
+            this.MessagesChangeEvent.Invoke(messages[Lenght - 1].role);
         }
 
         public void ResetMessages()
@@ -40,11 +52,18 @@ namespace Guizan.LLM
             {
                 new("system", "Você é um assistente que responde de forma clara e direta, usando apenas texto. Não use emojis nem emoticons em nenhuma resposta.")
             };
+            this.MessagesChangeEvent.Invoke("system");
         }
 
         public void AddMessage(Message message)
         {
             this.messages.Add(message);
+            this.MessagesChangeEvent.Invoke(message.role);
+        }
+
+        public AgentRequest GetRequest()
+        {
+            return new AgentRequest(messages, model, temperature, Max_completion_tokens, Top_p, Stream, Stop);
         }
 
         public string Model => model;
