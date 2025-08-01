@@ -1,27 +1,31 @@
-using Guizan.LLM;
+using Guizan.LLM.Utils;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestEmbedding : MonoBehaviour
+namespace Guizan.LLM.Embedding
 {
-    [SerializeField] private CohereEmbeddingClient client;
-
-    void Start()
+    public class TestEmbedding : MonoBehaviour
     {
-        List<string> textos = new List<string> {
-            "O céu está azul.",
-            "A IA pode ajudar em jogos."
-        };
+        [SerializeField] private CohereEmbeddingClient client;
 
-        client.RequestEmbeddings(textos);
-        client.EmbedResponseEvent.AddListener(ReceiveResponse);
-    }
+        void Start()
+        {
+            string texto = NPCMemoryLoader.LoadNPCStory("NPC1TesteHistory");
+            List<string> textos = texto.SplitTextIntoChunksWithOverlap(256, 32);
 
-    private void ReceiveResponse(CohereEmbeddingResponse response)
-    {
-        Debug.Log(response.responseType);
-        Debug.Log(response.embeddings);
-        Debug.Log(string.Join(",", response.embeddings[0]));
-        client.EmbedResponseEvent.RemoveListener(ReceiveResponse);
+            Debug.Log(texto); 
+            Debug.Log(textos);
+            Debug.Log(string.Join("<--\n\n-->", textos));
+            //client.RequestEmbeddings(textos);
+            //client.EmbedResponseEvent.AddListener(ReceiveResponse);
+        }
+
+        private void ReceiveResponse(CohereEmbeddingResponse response)
+        {
+            Debug.Log(response.responseType);
+            Debug.Log(response.embeddings);
+            Debug.Log(string.Join(",", response.embeddings[0]));
+            client.EmbedResponseEvent.RemoveListener(ReceiveResponse);
+        }
     }
 }

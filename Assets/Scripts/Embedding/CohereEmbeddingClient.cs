@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 
-namespace Guizan.LLM
+namespace Guizan.LLM.Embedding
 {
     [Serializable]
     public class CohereEmbeddingRequest
