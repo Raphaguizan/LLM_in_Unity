@@ -402,6 +402,7 @@ GameObject:
   - component: {fileID: 237956276}
   - component: {fileID: 237956275}
   - component: {fileID: 237956274}
+  - component: {fileID: 237956277}
   m_Layer: 0
   m_Name: NPC1
   m_TagString: Untagged
@@ -454,6 +455,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &237956277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237956273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f33ffa22102b5a448ea2671713c7894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &504081254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,7 +1495,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1286409099}
   - component: {fileID: 1286409098}
-  - component: {fileID: 1286409097}
   m_Layer: 0
   m_Name: Embeddings
   m_TagString: Untagged
@@ -1490,19 +1502,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1286409097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1286409096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f33ffa22102b5a448ea2671713c7894, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  client: {fileID: 1286409098}
 --- !u!114 &1286409098
 MonoBehaviour:
   m_ObjectHideFlags: 0

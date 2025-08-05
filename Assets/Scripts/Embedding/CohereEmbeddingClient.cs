@@ -7,6 +7,8 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
+using Game.Util;
+using NaughtyAttributes;
 
 namespace Guizan.LLM.Embedding
 {
@@ -23,30 +25,41 @@ namespace Guizan.LLM.Embedding
         }
     }
 
-    public class CohereEmbeddingResponse
+    [Serializable]
+    public class AgentEmbedding
     {
-        public ResponseType responseType;
-        [JsonProperty("embeddings")]
-        public List<List<float>> embeddings { get; set; }
+        [JsonProperty("embeddings"), ShowNativeProperty]
+        public List<List<float>> Embeddings { get; set; }
+
+        public AgentEmbedding() 
+        {
+            Embeddings = null;
+        }
+
+        public AgentEmbedding(List<List<float>> embeddings)
+        {
+            this.Embeddings = embeddings;
+        }
     }
 
-    public class CohereEmbeddingClient : MonoBehaviour
+    public class CohereEmbeddingClient : Singleton<CohereEmbeddingClient>
     {
         [Header("Cohere API Settings")]
         [SerializeField] private APIKeyConfig apiKey;
         private const string endpoint = "https://api.cohere.ai/v1/embed";
 
         [Space]
-        public UnityEvent<CohereEmbeddingResponse> EmbedResponseEvent;
+        public static UnityEvent<AgentEmbedding, ResponseType> EmbedResponseEvent;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             EmbedResponseEvent = new();
         }
 
-        public void RequestEmbeddings(List<string> texts)
+        public static void RequestEmbeddings(List<string> texts)
         {
-            StartCoroutine(RequestEmbeddingsCoroutine(texts));
+            Instance.StartCoroutine(Instance.RequestEmbeddingsCoroutine(texts));
         }
         private IEnumerator RequestEmbeddingsCoroutine(List<string> texts)
         {
@@ -63,21 +76,22 @@ namespace Guizan.LLM.Embedding
 
             yield return request.SendWebRequest();
 
-            CohereEmbeddingResponse response = new();
+            AgentEmbedding response = new();
+            ResponseType type = ResponseType.Success;
 
             if (request.result == UnityWebRequest.Result.Success)
             {
                 // A resposta é um JSON com "embeddings": [[...], [...]]
                 string responseText = request.downloadHandler.text;
-                response = JsonConvert.DeserializeObject<CohereEmbeddingResponse>(responseText);
+                response = JsonConvert.DeserializeObject<AgentEmbedding>(responseText);
             }
             else
             {
-                response.responseType = ResponseType.Error;
-                response.embeddings = null;
+                type = ResponseType.Error;
+                response.Embeddings = null;
             }
 
-            EmbedResponseEvent.Invoke(response);
+            EmbedResponseEvent.Invoke(response, type);
         }
     }
 }
