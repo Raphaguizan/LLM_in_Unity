@@ -28,17 +28,22 @@ namespace Guizan.LLM.Embedding
     [Serializable]
     public class AgentEmbedding
     {
+        [JsonProperty("chunks")]
+        public List<string> TextChunks { get; set; }
+
         [JsonProperty("embeddings"), ShowNativeProperty]
         public List<List<float>> Embeddings { get; set; }
 
         public AgentEmbedding() 
         {
             Embeddings = null;
+            TextChunks = null;
         }
 
-        public AgentEmbedding(List<List<float>> embeddings)
+        public AgentEmbedding(List<List<float>> embeddings, List<string> chunks)
         {
             this.Embeddings = embeddings;
+            this.TextChunks = chunks;
         }
     }
 
@@ -91,6 +96,7 @@ namespace Guizan.LLM.Embedding
                 response.Embeddings = null;
             }
 
+            response.TextChunks = texts;
             EmbedResponseEvent.Invoke(response, type);
         }
     }

@@ -11,24 +11,25 @@ namespace Guizan.LLM.Embedding
         public static void LoadAgentMemory(string agentID, Action<AgentEmbedding>  response)
         {
             AgentEmbedding agentEmbedding = AgentJSONSaver<AgentEmbedding>.LoadJSON(agentID, SavePathFolder.npc_Embedding);
-            if(agentEmbedding != default)
+
+            string story = LoadNPCStory(agentID);
+            List<string> storyChunks = MakeChunks(story);
+
+            if(agentEmbedding != default && CompareChunks(agentEmbedding.TextChunks, storyChunks))
             {
                 Debug.Log("Carregando embedding da História salva.");
                 response.Invoke(agentEmbedding);
                 return;
             }
 
-            string story = LoadNPCStory(agentID);
             if (story == null)
             {
                 Debug.LogError("Error! história não encontrada!");
                 return;
             }
-            List<string> storyChuncks = story.SplitTextIntoChunksWithOverlap(256, 32);
-
 
             Debug.Log("Gerando novo embedding da História.");
-            CohereEmbeddingClient.RequestEmbeddings(storyChuncks);
+            CohereEmbeddingClient.RequestEmbeddings(storyChunks);
             CohereEmbeddingClient.EmbedResponseEvent.AddListener((embedding, type) => ReceiveEmbeddinResponse(embedding, type, agentID, response));
         }
 
@@ -59,6 +60,28 @@ namespace Guizan.LLM.Embedding
             }
 
             return textAsset.text;
+        }
+
+        private static List<string> MakeChunks(string text)
+        {
+            return text.SplitTextIntoChunksWithOverlap(256, 32);
+        }
+
+        private static bool CompareChunks(List<string> chunk1, List<string> chunk2)
+        {
+            if (chunk1 == null || chunk2 == null)
+                return false;
+
+            for (int i = 0; i < chunk1.Count; i++)
+            {
+                if (!chunk1[i].Equals(chunk2[i]))
+                    return false;
+            }
+            return true;
+        }
+        public static void ClearMemory(string agentID)
+        {
+            AgentJSONSaver<AgentEmbedding>.ClearJSON(agentID);
         }
     }
 }
