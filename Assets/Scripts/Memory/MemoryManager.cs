@@ -12,7 +12,7 @@ namespace Guizan.LLM.Memory
         private int memoryTotalLenght = 50;
 
         [SerializeField, ResizableTextArea]
-        private string resumePrompt = "Você está interagindo com um jogador por meio de um personagem (NPC) em um jogo. O que foi conversado até agora não será enviado novamente. A partir desta mensagem, quero que você gere um resumo conciso da conversa anterior.\r\n\r\nEsse resumo deve servir como uma memória para o NPC, contendo apenas os fatos importantes, intenções, decisões ou sentimentos relevantes que o jogador demonstrou.\r\n\r\nIgnore cumprimentos, piadas ou partes irrelevantes.\r\n\r\nEscreva o resumo como se fosse uma nota pessoal do NPC para lembrar o que aconteceu até agora. Use frases curtas, diretas, no estilo de tópicos.\r\n\r\nExemplo:\r\n- O jogador contou que foi expulso da colônia Aurora por questionar a liderança.\r\n- Está procurando pistas sobre um artefato chamado Prisma Sombrio.\r\n- Pediu ajuda para encontrar um engenheiro chamado Drax.\r\n\r\nAgora, por favor, resuma a conversa até este ponto.\r\n";
+        private string sumaryPrompt = "Você está interagindo com um jogador por meio de um personagem (NPC) em um jogo. O que foi conversado até agora não será enviado novamente. A partir desta mensagem, quero que você gere um resumo conciso da conversa anterior.\r\n\r\nEsse resumo deve servir como uma memória para o NPC, contendo apenas os fatos importantes, intenções, decisões ou sentimentos relevantes que o jogador demonstrou.\r\n\r\nIgnore cumprimentos, piadas ou partes irrelevantes.\r\n\r\nEscreva o resumo como se fosse uma nota pessoal do NPC para lembrar o que aconteceu até agora. Use frases curtas, diretas, no estilo de tópicos.\r\n\r\nExemplo:\r\n- O jogador contou que foi expulso da colônia Aurora por questionar a liderança.\r\n- Está procurando pistas sobre um artefato chamado Prisma Sombrio.\r\n- Pediu ajuda para encontrar um engenheiro chamado Drax.\r\n\r\nAgora, por favor, resuma a conversa até este ponto.\r\n";
 
         private LLMAgent agent;
         private AgentConfigs llmAgentConfigs;
@@ -52,7 +52,7 @@ namespace Guizan.LLM.Memory
             if(keepLastMessage)
                 lastAssistantMessage = GetLastAssistantMessage();
 
-            GroqLLM.SendMessageToLLM(llmAgentConfigs, new("user", resumePrompt));
+            GroqLLM.SendMessageToLLM(llmAgentConfigs, new("user", sumaryPrompt));
             GroqLLM.ResponseEvent.AddListener(ReceiveSumary);
         }
 
@@ -93,6 +93,13 @@ namespace Guizan.LLM.Memory
         private void SaveMemory()
         {
             AgentJSONSaver<List<Message>>.SaveJSON(llmAgentConfigs.AgentID, llmAgentConfigs.Messages, SavePathFolder.npc_Memory);
+        }
+
+        [Button]
+        public void ResetMemory()
+        {
+            AgentJSONSaver<List<Message>>.ClearJSON(llmAgentConfigs.AgentID, SavePathFolder.npc_Memory);
+            llmAgentConfigs.ResetMessages();
         }
 
         private void OnApplicationFocus(bool focus)

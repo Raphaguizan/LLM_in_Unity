@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using NaughtyAttributes;
+using Guizan.LLM.Embedding;
+using System;
 
 
 namespace Guizan.LLM
@@ -19,10 +21,12 @@ namespace Guizan.LLM
 
         public void ReceiveText(string message)
         {
-            GroqLLM.SendMessageToLLM(myConfigs, new("user", message));
-            GroqLLM.ResponseEvent.AddListener(ReceiveAndSendLLMAnswer);
+            EmbeddingTest(message, () => 
+            {
+                GroqLLM.SendMessageToLLM(myConfigs, new("user", message));
+                GroqLLM.ResponseEvent.AddListener(ReceiveAndSendLLMAnswer);
+            });
         }
-
 
         private void ReceiveAndSendLLMAnswer(ResponseLLM response)
         {
@@ -41,6 +45,18 @@ namespace Guizan.LLM
             }
 
             GroqLLM.ResponseEvent.RemoveListener(ReceiveAndSendLLMAnswer);
+        }
+
+        private void EmbeddingTest(string playerMessage, Action embeddingTested)
+        {
+            if (!TryGetComponent<HistoryMemoryManager>(out var hmm))
+            {
+                embeddingTested?.Invoke();
+                Debug.Log("sem componente HistoryMemoryManager");
+                return;
+            }
+
+            hmm.MakeEmbedding(playerMessage, embeddingTested);
         }
     }
 }

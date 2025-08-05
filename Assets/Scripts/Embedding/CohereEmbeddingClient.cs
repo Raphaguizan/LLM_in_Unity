@@ -61,12 +61,20 @@ namespace Guizan.LLM.Embedding
             base.Awake();
             EmbedResponseEvent = new();
         }
-
-        public static void RequestEmbeddings(List<string> texts)
+        public static void RequestEmbeddings(string texts, Action<AgentEmbedding, ResponseType> onResponse = null)
         {
-            Instance.StartCoroutine(Instance.RequestEmbeddingsCoroutine(texts));
+            List<string> chunks = new()
+            {
+                texts
+            };
+
+            RequestEmbeddings(chunks, onResponse);
         }
-        private IEnumerator RequestEmbeddingsCoroutine(List<string> texts)
+        public static void RequestEmbeddings(List<string> texts, Action<AgentEmbedding, ResponseType> onResponse = null)
+        {
+            Instance.StartCoroutine(Instance.RequestEmbeddingsCoroutine(texts, onResponse));
+        }
+        private IEnumerator RequestEmbeddingsCoroutine(List<string> texts, Action<AgentEmbedding, ResponseType> onResponse = null)
         {
             CohereEmbeddingRequest payload = new CohereEmbeddingRequest(texts);
             string json = JsonUtility.ToJson(payload);
@@ -81,23 +89,24 @@ namespace Guizan.LLM.Embedding
 
             yield return request.SendWebRequest();
 
-            AgentEmbedding response = new();
+            AgentEmbedding embeddingResponse = new();
             ResponseType type = ResponseType.Success;
 
             if (request.result == UnityWebRequest.Result.Success)
             {
                 // A resposta é um JSON com "embeddings": [[...], [...]]
                 string responseText = request.downloadHandler.text;
-                response = JsonConvert.DeserializeObject<AgentEmbedding>(responseText);
+                embeddingResponse = JsonConvert.DeserializeObject<AgentEmbedding>(responseText);
             }
             else
             {
                 type = ResponseType.Error;
-                response.Embeddings = null;
+                embeddingResponse.Embeddings = null;
             }
 
-            response.TextChunks = texts;
-            EmbedResponseEvent.Invoke(response, type);
+            embeddingResponse.TextChunks = texts;
+            EmbedResponseEvent.Invoke(embeddingResponse, type);
+            onResponse?.Invoke(embeddingResponse, type);
         }
     }
 }

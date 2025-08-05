@@ -1,4 +1,6 @@
 using Guizan.LLM;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +9,9 @@ namespace Guizan.LLM.Embedding
     [RequireComponent(typeof(LLMAgent))]
     public class HistoryMemoryManager : MonoBehaviour
     {
+        [SerializeField, Range(-1f, 1f)]
+        private float similarityAccept = .5f;
+        
         [SerializeField]
         private AgentEmbedding embeddings;
 
@@ -23,6 +28,40 @@ namespace Guizan.LLM.Embedding
             //Debug.Log(string.Join(",", response.Embeddings[0]));
             embeddings = response;
             //client.EmbedResponseEvent.RemoveListener(ReceiveResponse);
+        }
+
+        public void MakeEmbedding(string text, Action conclusion = null)
+        {
+            CohereEmbeddingClient.RequestEmbeddings(text, (emb, type) => {
+                if(type == ResponseType.Success)
+                {
+                    var (index, score) = EmbeddingUtils.GetMostSimilarEmbedding(emb.Embeddings[0], embeddings);
+                    Debug.Log($"score : {score}\n\ntexto:\n{text}");
+                    if(score > similarityAccept)
+                    {
+                        SendSystemEmbeddingMessage(index, conclusion);
+                        return;
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Error ao receber embedding\n\n"+emb);
+                }
+                    conclusion?.Invoke();
+            });
+        }
+
+        private void SendSystemEmbeddingMessage(int chunkIndex, Action conclusion = null)
+        {
+            GroqLLM.SendMessageToLLM(agent.AgentConfigs, MakeSystemPrompt(chunkIndex), (x) => conclusion?.Invoke());
+        }
+
+
+        private Message MakeSystemPrompt(int chunkIndex)
+        {
+            string chunkText = embeddings.TextChunks[chunkIndex];
+            string prompt = $"Agora leve em consideração na hora de responder ao usuário essa história do personagem que você está interpertando:\n\"{chunkText}\"";
+            return new Message("system", prompt);
         }
     }
 }

@@ -46,8 +46,9 @@ namespace Guizan.LLM
             File.WriteAllText(path, json);
         }
 
-        public static void ClearJSON(string npcId, string playerId = "")
+        public static void ClearJSON(string npcId, SavePathFolder pathType = SavePathFolder.npc_Memory, string playerId = "")
         {
+            SetMemoryFolder(pathType);
             string path = GetPath(npcId, playerId);
             if (File.Exists(path))
                 File.Delete(path);

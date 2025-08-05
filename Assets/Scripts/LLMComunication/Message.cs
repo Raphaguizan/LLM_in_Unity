@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using Newtonsoft.Json;
 using System;
 
@@ -8,7 +9,7 @@ namespace Guizan.LLM
     {
         [JsonProperty("role")]
         public string role;
-        [JsonProperty("content")]
+        [JsonProperty("content"), ResizableTextArea]
         public string content;
 
         public Message(string role, string content)

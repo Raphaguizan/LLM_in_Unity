@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 using Game.Util;
+using System;
 
 namespace Guizan.LLM
 {
@@ -31,13 +32,13 @@ namespace Guizan.LLM
             ResponseEvent = new();
         }
 
-        public static void SendMessageToLLM(AgentConfigs agent, Message userMessage)
+        public static void SendMessageToLLM(AgentConfigs agent, Message userMessage, Action<ResponseLLM> onResponse = null)
         {
             agent.AddMessage(userMessage);
-            Instance.StartCoroutine(Instance.SendToGroq(agent));
+            Instance.StartCoroutine(Instance.SendToGroq(agent,onResponse));
         }
 
-        IEnumerator SendToGroq(AgentConfigs agent)
+        IEnumerator SendToGroq(AgentConfigs agent, Action<ResponseLLM> onResponse = null)
         {
             string jsonPayload = JsonUtility.ToJson(agent.GetRequest());
 
@@ -74,6 +75,7 @@ namespace Guizan.LLM
 
             //Debug.Log(response);
             ResponseEvent.Invoke(response);
+            onResponse?.Invoke(response);
         }
     }
 }

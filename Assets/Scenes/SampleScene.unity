@@ -423,6 +423,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   memoryTotalLenght: 50
+  sumaryPrompt: "Voc\xEA est\xE1 interagindo com um jogador por meio de um personagem
+    (NPC) em um jogo. O que foi conversado at\xE9 agora n\xE3o ser\xE1 enviado novamente.
+    A partir desta mensagem, quero que voc\xEA gere um resumo conciso da conversa
+    anterior.\r\n\r\nEsse resumo deve servir como uma mem\xF3ria para o NPC, contendo
+    apenas os fatos importantes, inten\xE7\xF5es, decis\xF5es ou sentimentos relevantes
+    que o jogador demonstrou.\r\n\r\nIgnore cumprimentos, piadas ou partes irrelevantes.\r\n\r\nEscreva
+    o resumo como se fosse uma nota pessoal do NPC para lembrar o que aconteceu at\xE9
+    agora. Use frases curtas, diretas, no estilo de t\xF3picos.\r\n\r\nExemplo:\r\n-
+    O jogador contou que foi expulso da col\xF4nia Aurora por questionar a lideran\xE7a.\r\n-
+    Est\xE1 procurando pistas sobre um artefato chamado Prisma Sombrio.\r\n- Pediu
+    ajuda para encontrar um engenheiro chamado Drax.\r\n\r\nAgora, por favor, resuma
+    a conversa at\xE9 este ponto.\r\n"
 --- !u!114 &237956275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,6 +479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f33ffa22102b5a448ea2671713c7894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  similarityAccept: 0.45
 --- !u!1 &504081254
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,6 +880,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   memoryTotalLenght: 50
+  sumaryPrompt: "Voc\xEA est\xE1 interagindo com um jogador por meio de um personagem
+    (NPC) em um jogo. O que foi conversado at\xE9 agora n\xE3o ser\xE1 enviado novamente.
+    A partir desta mensagem, quero que voc\xEA gere um resumo conciso da conversa
+    anterior.\r\n\r\nEsse resumo deve servir como uma mem\xF3ria para o NPC, contendo
+    apenas os fatos importantes, inten\xE7\xF5es, decis\xF5es ou sentimentos relevantes
+    que o jogador demonstrou.\r\n\r\nIgnore cumprimentos, piadas ou partes irrelevantes.\r\n\r\nEscreva
+    o resumo como se fosse uma nota pessoal do NPC para lembrar o que aconteceu at\xE9
+    agora. Use frases curtas, diretas, no estilo de t\xF3picos.\r\n\r\nExemplo:\r\n-
+    O jogador contou que foi expulso da col\xF4nia Aurora por questionar a lideran\xE7a.\r\n-
+    Est\xE1 procurando pistas sobre um artefato chamado Prisma Sombrio.\r\n- Pediu
+    ajuda para encontrar um engenheiro chamado Drax.\r\n\r\nAgora, por favor, resuma
+    a conversa at\xE9 este ponto.\r\n"
 --- !u!114 &543732419
 MonoBehaviour:
   m_ObjectHideFlags: 0

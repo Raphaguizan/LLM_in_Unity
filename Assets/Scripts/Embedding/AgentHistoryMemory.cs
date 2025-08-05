@@ -8,7 +8,7 @@ namespace Guizan.LLM.Embedding
 {
     public static class AgentHistoryMemory
     {
-        public static void LoadAgentMemory(string agentID, Action<AgentEmbedding>  response)
+        public static void LoadAgentMemory(string agentID, Action<AgentEmbedding>  onResponse)
         {
             AgentEmbedding agentEmbedding = AgentJSONSaver<AgentEmbedding>.LoadJSON(agentID, SavePathFolder.npc_Embedding);
 
@@ -18,7 +18,7 @@ namespace Guizan.LLM.Embedding
             if(agentEmbedding != default && CompareChunks(agentEmbedding.TextChunks, storyChunks))
             {
                 Debug.Log("Carregando embedding da História salva.");
-                response.Invoke(agentEmbedding);
+                onResponse?.Invoke(agentEmbedding);
                 return;
             }
 
@@ -30,10 +30,10 @@ namespace Guizan.LLM.Embedding
 
             Debug.Log("Gerando novo embedding da História.");
             CohereEmbeddingClient.RequestEmbeddings(storyChunks);
-            CohereEmbeddingClient.EmbedResponseEvent.AddListener((embedding, type) => ReceiveEmbeddinResponse(embedding, type, agentID, response));
+            CohereEmbeddingClient.EmbedResponseEvent.AddListener((embedding, type) => ReceiveEmbeddinResponse(embedding, type, agentID, onResponse));
         }
 
-        private static void ReceiveEmbeddinResponse(AgentEmbedding embedding, ResponseType type, string agentID, Action<AgentEmbedding> response)
+        private static void ReceiveEmbeddinResponse(AgentEmbedding embedding, ResponseType type, string agentID, Action<AgentEmbedding> onResponse)
         {
             if(type == ResponseType.Error)
             {
@@ -42,7 +42,7 @@ namespace Guizan.LLM.Embedding
             }
 
             SaveNPCStory(agentID, embedding);
-            response.Invoke(embedding);
+            onResponse?.Invoke(embedding);
         }
 
         private static void SaveNPCStory(string agentID, AgentEmbedding embeddins)
@@ -62,7 +62,7 @@ namespace Guizan.LLM.Embedding
             return textAsset.text;
         }
 
-        private static List<string> MakeChunks(string text)
+        public static List<string> MakeChunks(string text)
         {
             return text.SplitTextIntoChunksWithOverlap(256, 32);
         }

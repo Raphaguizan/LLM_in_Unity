@@ -17,9 +17,7 @@ namespace Guizan.LLM.Embedding
         /// - valor da similaridade (entre -1 e 1, sendo 1 a máxima similaridade).
         /// </returns>
         /// <exception cref="Exception">Se a lista de embeddings estiver vazia.</exception>
-        public static (int index, float score) GetMostSimilarEmbedding(
-            List<float> queryEmbedding,
-            AgentEmbedding agentEmbedding)
+        public static (int index, float score) GetMostSimilarEmbedding(List<float> queryEmbedding, AgentEmbedding agentEmbedding)
         {
             if (agentEmbedding.Embeddings == null || agentEmbedding.Embeddings.Count == 0)
             {
