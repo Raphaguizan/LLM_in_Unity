@@ -14,13 +14,13 @@ namespace Guizan.LLM.Embedding
         void Start()
         {
             agent = GetComponent<LLMAgent>();
-            AgentHistoryMemory.LoadAgentMemory(agent.AgentConfigs.AgentID, ReceiveResponse);
+            AgentHistoryMemory.LoadAgentMemory(agent.AgentConfigs.AgentID, ReceiveLoadResponse);
         }
 
-        private void ReceiveResponse(AgentEmbedding response)
+        private void ReceiveLoadResponse(AgentEmbedding response)
         {
-            Debug.Log(response.Embeddings);
-            Debug.Log(string.Join(",", response.Embeddings[0]));
+            //Debug.Log(response.Embeddings);
+            //Debug.Log(string.Join(",", response.Embeddings[0]));
             embeddings = response;
             //client.EmbedResponseEvent.RemoveListener(ReceiveResponse);
         }

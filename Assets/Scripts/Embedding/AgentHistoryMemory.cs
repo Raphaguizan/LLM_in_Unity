@@ -10,8 +10,8 @@ namespace Guizan.LLM.Embedding
     {
         public static void LoadAgentMemory(string agentID, Action<AgentEmbedding>  response)
         {
-            AgentEmbedding agentEmbedding = EmbeddingSaveManager.LoadMemory(agentID);
-            if(agentEmbedding.Embeddings != null)
+            AgentEmbedding agentEmbedding = AgentJSONSaver<AgentEmbedding>.LoadJSON(agentID, SavePathFolder.npc_Embedding);
+            if(agentEmbedding != default)
             {
                 Debug.Log("Carregando embedding da História salva.");
                 response.Invoke(agentEmbedding);
@@ -46,7 +46,7 @@ namespace Guizan.LLM.Embedding
 
         private static void SaveNPCStory(string agentID, AgentEmbedding embeddins)
         {
-            EmbeddingSaveManager.SaveMemory(agentID, embeddins);
+            AgentJSONSaver<AgentEmbedding>.SaveJSON(agentID, embeddins, SavePathFolder.npc_Embedding);
         }
         private static string LoadNPCStory(string agentID)
         {
