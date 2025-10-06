@@ -2,6 +2,7 @@ using Guizan.LLM;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Guizan.LLM.Embedding
@@ -36,8 +37,8 @@ namespace Guizan.LLM.Embedding
                 if(type == ResponseType.Success)
                 {
                     var (index, score) = EmbeddingUtils.GetMostSimilarEmbedding(emb.Embeddings[0], embeddings);
-                    Debug.Log($"score : {score}\n\ntexto:\n{text}");
-                    if(score > similarityAccept)
+                    Debug.Log($"score : {score}  Index : {index}\n\ntexto:\n{text}");
+                    if(score > similarityAccept && !ChuckAlreadySent(index))
                     {
                         SendSystemEmbeddingMessage(index, conclusion);
                         return;
@@ -47,8 +48,12 @@ namespace Guizan.LLM.Embedding
                 {
                     Debug.LogError("Error ao receber embedding\n\n"+emb);
                 }
-                    conclusion?.Invoke();
+                conclusion?.Invoke();
             });
+        }
+        private bool ChuckAlreadySent(int chunkIndex)
+        {
+            return agent.AgentConfigs.Messages.Any(msg => msg.role == "system" && msg.content.Contains(embeddings.TextChunks[chunkIndex]));
         }
 
         private void SendSystemEmbeddingMessage(int chunkIndex, Action conclusion = null)

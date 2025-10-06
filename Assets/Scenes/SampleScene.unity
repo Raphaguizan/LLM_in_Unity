@@ -422,7 +422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b838bcb7d3c690c4fbdfd6aa913199bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  memoryTotalLenght: 50
+  memoryTotalLenght: 10
   sumaryPrompt: "Voc\xEA est\xE1 interagindo com um jogador por meio de um personagem
     (NPC) em um jogo. O que foi conversado at\xE9 agora n\xE3o ser\xE1 enviado novamente.
     A partir desta mensagem, quero que voc\xEA gere um resumo conciso da conversa
