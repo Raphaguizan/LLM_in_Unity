@@ -9,7 +9,7 @@ namespace Guizan.LLM
     public enum SavePathFolder
     {
         npc_Memory,
-        npc_Embedding
+        embedding
     }
     public class AgentJSONSaver<T>
     {

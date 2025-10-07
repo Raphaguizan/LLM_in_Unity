@@ -14,6 +14,16 @@ namespace Guizan.LLM.Agent
 
         public List<Message> Memory => myMemory.Memory;
 
+        private void Start()
+        {
+            LoadMemory();
+        }
+
+        public void SetMemory(List<Message> newMemory)
+        {
+            myMemory.SetMemory(newMemory);
+        }
+
         public void AddMemory(Message message)
         {
             myMemory.AddMemory(message);
@@ -38,9 +48,7 @@ namespace Guizan.LLM.Agent
 
         private Message lastAssistantMessage = null;
         [HideInInspector]
-        public UnityEvent MemorySumarizedCallBack;
-
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        public UnityEvent MemoryResetCallBack;
 
         private void VerifyMemoryLenght()
         {
@@ -49,6 +57,12 @@ namespace Guizan.LLM.Agent
 
             if (Memory.Count >= memoryTotalLenght)
                 SumarizeMemory();
+        }
+
+        public void ResetMemory()
+        {
+            myMemory.ResetMemories();
+            MemoryResetCallBack.Invoke();
         }
 
         /// <summary>
@@ -81,7 +95,7 @@ namespace Guizan.LLM.Agent
                 AddMemory(lastAssistantMessage);
 
             lastAssistantMessage = null;
-            MemorySumarizedCallBack.Invoke();
+            MemoryResetCallBack.Invoke();
         }
 
         private Message GetLastAssistantMessage()
@@ -93,5 +107,38 @@ namespace Guizan.LLM.Agent
             }
             return null;
         }
+
+        #region Save
+        
+        [Button]
+        public void ResetSavedMemory()
+        {
+            AgentJSONSaver<List<Message>>.ClearJSON(myMemory.ID, SavePathFolder.npc_Memory);
+            ResetMemory();
+        }
+
+        private void SaveMemory()
+        {
+            AgentJSONSaver<List<Message>>.SaveJSON(myMemory.ID, Memory, SavePathFolder.npc_Memory);
+        }
+
+        private void LoadMemory()
+        {
+            var newMemory = AgentJSONSaver<List<Message>>.LoadJSON(myMemory.ID, SavePathFolder.npc_Memory);
+            if (newMemory == default)
+                MemoryResetCallBack.Invoke();
+        }
+
+        private void OnApplicationFocus(bool focus)
+        {
+            if (!focus)
+                SaveMemory();
+        }
+
+        private void OnDestroy()
+        {
+            SaveMemory();
+        }
+        #endregion
     }
 }

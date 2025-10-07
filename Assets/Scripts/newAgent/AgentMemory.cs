@@ -9,10 +9,18 @@ namespace Guizan.LLM.Agent
     public class AgentMemory : ScriptableObject
     {
         [SerializeField]
+        private string npcID;
+        [SerializeField]
         private List<Message> memory;
 
         public List<Message> Memory => memory;
+        public string ID => npcID;
 
+
+        public void SetMemory(List<Message> newMemory)
+        {
+            memory = newMemory;
+        }
         public void AddMemory(Message newMessage)
         {
             memory.Add(newMessage);

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Guizan.LLM
 {
     [Serializable]
-    public class AgentRequest
+    public class ConfigRequest
     {
         public List<Message> messages;
         public string model;
@@ -15,7 +15,7 @@ namespace Guizan.LLM
         public string stop;
 
 
-        public AgentRequest(List<Message> messages, string model = "gemma2-9b-it", float temperature = 1f, int maxTokens = 1024, float topP = 1f, bool stream = false, string stop = null)
+        public ConfigRequest(List<Message> messages, string model = "gemma2-9b-it", float temperature = 1f, int maxTokens = 1024, float topP = 1f, bool stream = false, string stop = null)
         {
             this.messages = messages;
             this.model = model;

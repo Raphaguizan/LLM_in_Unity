@@ -15,7 +15,7 @@ namespace Guizan.LLM.Agent
         void Awake()
         {
             memoryManager = GetComponent<AgentMemoryManager>();
-            memoryManager.MemorySumarizedCallBack.AddListener(OnMemoryCallBack);
+            memoryManager.MemoryResetCallBack.AddListener(OnMemoryCallBack);
         }
 
         private void OnMemoryCallBack()
@@ -40,7 +40,7 @@ namespace Guizan.LLM.Agent
 
         private void OnDestroy()
         {
-            memoryManager.MemorySumarizedCallBack.RemoveAllListeners();
+            memoryManager.MemoryResetCallBack.RemoveAllListeners();
         }
     }
 }

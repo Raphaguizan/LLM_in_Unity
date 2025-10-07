@@ -10,7 +10,7 @@ namespace Guizan.LLM.Embedding
     {
         public static void LoadAgentMemory(string agentID, Action<AgentEmbedding>  onResponse)
         {
-            AgentEmbedding agentEmbedding = AgentJSONSaver<AgentEmbedding>.LoadJSON(agentID, SavePathFolder.npc_Embedding);
+            AgentEmbedding agentEmbedding = AgentJSONSaver<AgentEmbedding>.LoadJSON(agentID, SavePathFolder.embedding);
 
             string story = LoadNPCStory(agentID);
             List<string> storyChunks = MakeChunks(story);
@@ -47,7 +47,7 @@ namespace Guizan.LLM.Embedding
 
         private static void SaveNPCStory(string agentID, AgentEmbedding embeddins)
         {
-            AgentJSONSaver<AgentEmbedding>.SaveJSON(agentID, embeddins, SavePathFolder.npc_Embedding);
+            AgentJSONSaver<AgentEmbedding>.SaveJSON(agentID, embeddins, SavePathFolder.embedding);
         }
         private static string LoadNPCStory(string agentID)
         {

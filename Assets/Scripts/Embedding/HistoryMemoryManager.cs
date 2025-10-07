@@ -58,7 +58,7 @@ namespace Guizan.LLM.Embedding
 
         private void SendSystemEmbeddingMessage(int chunkIndex, Action conclusion = null)
         {
-            GroqLLM.SendMessageToLLM(agent.AgentConfigs, MakeSystemPrompt(chunkIndex), (x) => conclusion?.Invoke());
+            //GroqLLM.SendMessageToLLM(agent.AgentConfigs, MakeSystemPrompt(chunkIndex), (x) => conclusion?.Invoke());
         }
 
 

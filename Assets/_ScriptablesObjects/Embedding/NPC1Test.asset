@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e769f1804f559d641b3f03e70b120bcd, type: 3}
-  m_Name: NPC1Memory
-  m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.Agent.AgentMemory
-  npcID: NewNPC1
-  memory: []
+  m_Script: {fileID: 11500000, guid: 0a7114d2997fd2b4cb2bdba3ee244254, type: 3}
+  m_Name: NPC1Test
+  m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.Embedding.FileEmbedding
+  archive: {fileID: 4900000, guid: 04e76d1524a25a04f971aa17763af87c, type: 3}

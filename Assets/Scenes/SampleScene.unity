@@ -1227,7 +1227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab62c45cee423e2408dd1c4ea512a8d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.Agent.AgentTalkManager
-  configs: {fileID: 11400000, guid: f4db94ebcfc746d44ba6af06b5796371, type: 2}
 --- !u!4 &1042540423
 Transform:
   m_ObjectHideFlags: 0
@@ -1272,7 +1271,7 @@ MonoBehaviour:
     que o jogador terminou a conversa, Lembre-se de deixar expl\xEDcito como a conversa
     acabou para que o NPC saiba como voltar a conversar quando o jogador quiser interagir
     como ele novamente.\r\n"
-  MemorySumarizedCallBack:
+  MemoryResetCallBack:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1042540425
@@ -2156,6 +2155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groqKey: {fileID: 11400000, guid: 2281fcede3605ff408025359d16e7977, type: 2}
+  defaulConfig: {fileID: 11400000, guid: f4db94ebcfc746d44ba6af06b5796371, type: 2}
 --- !u!4 &2043220179
 Transform:
   m_ObjectHideFlags: 0

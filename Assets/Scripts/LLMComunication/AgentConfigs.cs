@@ -62,9 +62,9 @@ namespace Guizan.LLM
             this.MessagesChangeEvent.Invoke(message.role);
         }
 
-        public AgentRequest GetRequest()
+        public ConfigRequest GetRequest()
         {
-            return new AgentRequest(messages, model, temperature, Max_completion_tokens, Top_p, Stream, Stop);
+            return new ConfigRequest(messages, model, temperature, Max_completion_tokens, Top_p, Stream, Stop);
         }
 
         public string Model => model;

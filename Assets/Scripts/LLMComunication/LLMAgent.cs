@@ -23,15 +23,15 @@ namespace Guizan.LLM
         {
             EmbeddingTest(message, () => 
             {
-                GroqLLM.SendMessageToLLM(myConfigs, new(MessageRole.user, message));
+               // GroqLLM.SendMessageToLLM(myConfigs, new(MessageRole.user, message));
                 GroqLLM.ResponseEvent.AddListener(ReceiveAndSendLLMAnswer);
             });
         }
 
         private void ReceiveAndSendLLMAnswer(ResponseLLM response)
         {
-            if (response == null || response.AgentID != myConfigs.AgentID)
-                return;
+            //if (response == null || response.AgentID != myConfigs.AgentID)
+                //return;
 
             if(response.type == ResponseType.Success)
             {

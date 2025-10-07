@@ -7,10 +7,12 @@ namespace Guizan.LLM.Agent
 
     public class AgentTalkManager : MonoBehaviour
     {
-        [SerializeField, Expandable]
-        private AgentConfigs configs;
+        [SerializeField, ResizableTextArea, Tooltip("Frase que será enviada caso ocorra algum erroe o request não retornar Success.")]
+        private string defaultMessage = "Error";
         private AgentMemoryManager memory;
 
+
+        public string DefaultMessage => defaultMessage;
         private void Awake()
         {
             memory = GetComponent<AgentMemoryManager>();
@@ -26,12 +28,16 @@ namespace Guizan.LLM.Agent
                 messages = memory.Memory;
             }
 
-            GroqLLM.SendMessageToLLM(messages, configs, ReceiveAnswer);
+            GroqLLM.SendMessageToLLM(messages, ReceiveAnswer);
         }
 
         private void ReceiveAnswer(ResponseLLM response)
         {
-            Debug.Log(response.responseText);
+            if(response.type == ResponseType.Error)
+            {
+                Debug.LogError(defaultMessage);
+                return;
+            }
 
             if(memory != null)
             {

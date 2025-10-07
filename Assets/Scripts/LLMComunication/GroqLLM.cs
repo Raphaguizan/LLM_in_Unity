@@ -19,6 +19,9 @@ namespace Guizan.LLM
         [SerializeField]
         private APIKeyConfig groqKey;
 
+        [SerializeField, Expandable]
+        private LLMConfigs defaulConfig;
+
         [Space, SerializeField]
         public static UnityEvent<ResponseLLM> ResponseEvent;
 
@@ -32,27 +35,31 @@ namespace Guizan.LLM
             ResponseEvent = new();
         }
         //TODO: RETIRAR JEITO ANTIGO DE FAZER A CHAMADA
-        public static void SendMessageToLLM(AgentConfigs agent, Message userMessage, Action<ResponseLLM> onResponse = null)
-        {
-            agent.AddMessage(userMessage);
-            Instance.StartCoroutine(Instance.SendToGroq(agent, agent.GetRequest().messages,onResponse));
-        }
+        //public static void SendMessageToLLM(AgentConfigs agent, Message userMessage, Action<ResponseLLM> onResponse = null)
+        //{
+        //    agent.AddMessage(userMessage);
+        //    Instance.StartCoroutine(Instance.SendToGroq(agent, agent.GetRequest().messages,onResponse));
+        //}
 
-        public static void SendMessageToLLM(List<Message> messages, AgentConfigs agent,  Action<ResponseLLM> onResponse = null)
+        public static void SendMessageToLLM(List<Message> messages, LLMConfigs configs,  Action<ResponseLLM> onResponse = null)
         {
-            Instance.StartCoroutine(Instance.SendToGroq(agent, messages, onResponse));
+            Instance.StartCoroutine(Instance.SendToGroq(configs, messages, onResponse));
         }
 
         public static void SendMessageToLLM(List<Message> messages, Action<ResponseLLM> onResponse = null)
         {
-            AgentConfigs agent = new();
-            Instance.StartCoroutine(Instance.SendToGroq(agent, messages, onResponse));
+            if(Instance.defaulConfig == null)
+            {
+                Debug.LogError("Configuração padrão está vazia");
+                return;
+            }
+            Instance.StartCoroutine(Instance.SendToGroq(Instance.defaulConfig, messages, onResponse));
         }
 
-        IEnumerator SendToGroq(AgentConfigs agent, List<Message> messages, Action<ResponseLLM> onResponse = null)
+        IEnumerator SendToGroq(LLMConfigs configs, List<Message> messages, Action<ResponseLLM> onResponse = null)
         {
             //TODO: CORRIGIR A ENTRADA DE DADOS
-            AgentRequest newRequest = agent.GetRequest();
+            ConfigRequest newRequest = configs.GetRequest();
             newRequest.messages = messages;
             string jsonPayload = JsonUtility.ToJson(newRequest);
 
@@ -68,10 +75,7 @@ namespace Guizan.LLM
 
             yield return request.SendWebRequest();
 
-            ResponseLLM response = new()
-            {
-                AgentID = agent.AgentID
-            };
+            ResponseLLM response = new();
 
             if (request.result == UnityWebRequest.Result.Success)
             {
