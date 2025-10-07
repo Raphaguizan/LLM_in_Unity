@@ -1207,7 +1207,6 @@ GameObject:
   - component: {fileID: 1042540423}
   - component: {fileID: 1042540422}
   - component: {fileID: 1042540424}
-  - component: {fileID: 1042540425}
   m_Layer: 0
   m_Name: NewAgent
   m_TagString: Untagged
@@ -1256,53 +1255,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.Agent.AgentMemoryManager
   myMemory: {fileID: 11400000, guid: 9e49c5db745d47042976296bdd372357, type: 2}
-  memoryTotalLenght: 50
-  sumaryPrompt: "Voc\xEA est\xE1 interagindo com um jogador por meio de um personagem
-    (NPC) em um jogo. O que foi conversado at\xE9 agora n\xE3o ser\xE1 enviado novamente.
-    A partir desta mensagem, quero que voc\xEA gere um resumo conciso da conversa
-    anterior.\r\n\r\nEsse resumo deve servir como uma mem\xF3ria para o NPC, contendo
-    apenas os fatos importantes, inten\xE7\xF5es, decis\xF5es ou sentimentos relevantes
-    que o jogador demonstrou.\r\n\r\nIgnore cumprimentos, piadas ou partes irrelevantes.\r\n\r\nEscreva
-    o resumo como se fosse uma nota pessoal do NPC para lembrar o que aconteceu at\xE9
-    agora. Use frases curtas, diretas, no estilo de t\xF3picos.\r\n\r\nExemplo:\r\n-
-    O jogador contou que foi expulso da col\xF4nia Aurora por questionar a lideran\xE7a.\r\n-
-    Est\xE1 procurando pistas sobre um artefato chamado Prisma Sombrio.\r\n- Pediu
-    ajuda para encontrar um engenheiro chamado Drax.\r\n\r\nAgora, por favor, resuma
-    a conversa at\xE9 este ponto. Se a \xFAltima mensagem for do sistema falando
-    que o jogador terminou a conversa, Lembre-se de deixar expl\xEDcito como a conversa
-    acabou para que o NPC saiba como voltar a conversar quando o jogador quiser interagir
-    como ele novamente.\r\n"
-  MemorySumarizedCallBack:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1042540425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1042540420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7827df03bcd910b4c813d3b85389b0b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.Agent.AgentMemoryInjection
-  injectionsList:
-  - role: system
-    content: "Voc\xEA est\xE1 interpretando um personagem de RPG. Suas respostas
-      devem refletir a personalidade, emo\xE7\xF5es, experi\xEAncias e conhecimentos
-      do personagem que voc\xEA representa. Essas caracter\xEDsticas podem ser fornecidas
-      inicialmente ou atualizadas ao longo da conversa por meio de informa\xE7\xF5es
-      de contexto (embeddings) ou instru\xE7\xF5es espec\xEDficas.\n\nSempre responda
-      como se fosse o personagem, utilizando o estilo de fala, vocabul\xE1rio e atitude
-      apropriados. Seja coerente com o estado emocional atual, a mem\xF3ria do personagem
-      e sua hist\xF3ria.\n\n- N\xE3o use emojis ou emoticons.\n- N\xE3o mencione
-      que voc\xEA \xE9 uma IA ou um assistente.\n- N\xE3o forne\xE7a informa\xE7\xF5es
-      gen\xE9ricas ou fora do papel.\n- Mantenha as respostas imersivas, como se
-      estivesse vivendo naquele mundo.\n\nAs caracter\xEDsticas do personagem (personalidade,
-      mem\xF3rias, hist\xF3rico, humor atual, etc.) ser\xE3o fornecidas diretamente
-      ou indiretamente pelo sistema. Adapte-se a essas informa\xE7\xF5es conforme
-      necess\xE1rio.\n"
 --- !u!1 &1200646197
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,7 +23,7 @@ namespace Guizan.LLM
         {
             EmbeddingTest(message, () => 
             {
-                GroqLLM.SendMessageToLLM(myConfigs, new("user", message));
+                GroqLLM.SendMessageToLLM(myConfigs, new(MessageRole.user, message));
                 GroqLLM.ResponseEvent.AddListener(ReceiveAndSendLLMAnswer);
             });
         }
@@ -35,7 +35,7 @@ namespace Guizan.LLM
 
             if(response.type == ResponseType.Success)
             {
-                myConfigs.AddMessage(new("assistant",response.responseText));
+                myConfigs.AddMessage(new(MessageRole.assistant, response.responseText));
                 AnswerEvent.Invoke(response.responseText);
             }
             else

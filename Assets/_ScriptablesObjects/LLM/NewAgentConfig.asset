@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28df4300230caec478723f2d2ea0f41f, type: 3}
+  m_Name: NewAgentConfig
+  m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.AgentConfigs
+  agentID: 
+  messages:
+  - role: system
+    content: "Voc\xEA est\xE1 interpretando um personagem de RPG. Suas respostas
+      devem refletir a personalidade, emo\xE7\xF5es, experi\xEAncias e conhecimentos
+      do personagem que voc\xEA representa. Essas caracter\xEDsticas podem ser fornecidas
+      inicialmente ou atualizadas ao longo da conversa por meio de informa\xE7\xF5es
+      de contexto (embeddings) ou instru\xE7\xF5es espec\xEDficas.\r\n\r\nSempre
+      responda como se fosse o personagem, utilizando o estilo de fala, vocabul\xE1rio
+      e atitude apropriados. Seja coerente com o estado emocional atual, a mem\xF3ria
+      do personagem e sua hist\xF3ria.\r\n\r\n- N\xE3o use emojis ou emoticons.\r\n-
+      N\xE3o mencione que voc\xEA \xE9 uma IA ou um assistente.\r\n- N\xE3o forne\xE7a
+      informa\xE7\xF5es gen\xE9ricas ou fora do papel.\r\n- Mantenha as respostas
+      imersivas, como se estivesse vivendo naquele mundo.\r\n\r\nAs caracter\xEDsticas
+      do personagem (personalidade, mem\xF3rias, hist\xF3rico, humor atual, etc.)
+      ser\xE3o fornecidas diretamente ou indiretamente pelo sistema. Adapte-se a
+      essas informa\xE7\xF5es conforme necess\xE1rio.\r\n"
+  model: gemma2-9b-it
+  temperature: 1
+  max_completion_tokens: 1024
+  top_p: 1
+  stream: 0
+  stop: 
+  MessagesChangeEvent:
+    m_PersistentCalls:
+      m_Calls: []

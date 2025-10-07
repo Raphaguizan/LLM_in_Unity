@@ -4,17 +4,25 @@ using System;
 
 namespace Guizan.LLM
 {
+    public enum MessageRole
+    {
+        user,
+        system,
+        assistant
+    }
+
     [Serializable]
     public class Message 
     {
-        [JsonProperty("role")]
+        [JsonProperty("role"), Dropdown("rolesNames")]
         public string role;
         [JsonProperty("content"), ResizableTextArea]
         public string content;
 
-        public Message(string role, string content)
+        private static string[] rolesNames => Enum.GetNames(typeof(MessageRole));
+        public Message(MessageRole role, string content)
         {
-            this.role = role;
+            this.role = role.ToString();
             this.content = content;
         }
     }

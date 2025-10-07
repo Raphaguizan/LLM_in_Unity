@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections;
 using Guizan.LLM;
 using NaughtyAttributes;
+using Guizan.LLM.Agent;
 
 public class UICallLLM : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class UICallLLM : MonoBehaviour
     [Space]
     [SerializeField]
     private LLMAgent agent;
+    [SerializeField]
+    private AgentTalkManager agentTalk;
 
 
     private bool WaitResponse = false;
@@ -59,7 +62,8 @@ public class UICallLLM : MonoBehaviour
             return;
 
         // send data to script
-        agent.ReceiveText(text);
+        //agent.ReceiveText(text);
+        agentTalk.SendMessage(text);
         ChangeWaitResponse(true);
         //MockReponseTime(3f);
     }

@@ -43,7 +43,7 @@ namespace Guizan.LLM.Memory
         /// <param name="resumeMessage">Mensagem do systema antes de fazer o resumo. exemplo: "O jogador foi embora e acabou a conversa."</param>
         public void MakeMemorySumary(string resumeMessage)
         {
-            GroqLLM.SendMessageToLLM(llmAgentConfigs, new("system", resumeMessage));
+            GroqLLM.SendMessageToLLM(llmAgentConfigs, new(MessageRole.system, resumeMessage));
             SumarizeMemory(false);
         }
 
@@ -52,7 +52,7 @@ namespace Guizan.LLM.Memory
             if(keepLastMessage)
                 lastAssistantMessage = GetLastAssistantMessage();
 
-            GroqLLM.SendMessageToLLM(llmAgentConfigs, new("user", sumaryPrompt));
+            GroqLLM.SendMessageToLLM(llmAgentConfigs, new(MessageRole.user, sumaryPrompt));
             GroqLLM.ResponseEvent.AddListener(ReceiveSumary);
         }
 
@@ -62,7 +62,7 @@ namespace Guizan.LLM.Memory
                 return;
 
             llmAgentConfigs.ResetMessages();
-            llmAgentConfigs.AddMessage(new("system", response.responseText));
+            llmAgentConfigs.AddMessage(new(MessageRole.system, response.responseText));
 
             if (lastAssistantMessage != null)
                 llmAgentConfigs.AddMessage(lastAssistantMessage);
@@ -75,7 +75,7 @@ namespace Guizan.LLM.Memory
         {
             for(int i = llmAgentConfigs.Messages.Count - 1; i >= 0; i--)
             {
-                if (llmAgentConfigs.Messages[i].role.Equals("assistant"))
+                if (llmAgentConfigs.Messages[i].role.Equals(MessageRole.assistant))
                     return llmAgentConfigs.Messages[i];
             }
             return null;

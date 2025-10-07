@@ -31,16 +31,30 @@ namespace Guizan.LLM
             apiKey = groqKey.Key;
             ResponseEvent = new();
         }
-
+        //TODO: RETIRAR JEITO ANTIGO DE FAZER A CHAMADA
         public static void SendMessageToLLM(AgentConfigs agent, Message userMessage, Action<ResponseLLM> onResponse = null)
         {
             agent.AddMessage(userMessage);
-            Instance.StartCoroutine(Instance.SendToGroq(agent,onResponse));
+            Instance.StartCoroutine(Instance.SendToGroq(agent, agent.GetRequest().messages,onResponse));
         }
 
-        IEnumerator SendToGroq(AgentConfigs agent, Action<ResponseLLM> onResponse = null)
+        public static void SendMessageToLLM(List<Message> messages, AgentConfigs agent,  Action<ResponseLLM> onResponse = null)
         {
-            string jsonPayload = JsonUtility.ToJson(agent.GetRequest());
+            Instance.StartCoroutine(Instance.SendToGroq(agent, messages, onResponse));
+        }
+
+        public static void SendMessageToLLM(List<Message> messages, Action<ResponseLLM> onResponse = null)
+        {
+            AgentConfigs agent = new();
+            Instance.StartCoroutine(Instance.SendToGroq(agent, messages, onResponse));
+        }
+
+        IEnumerator SendToGroq(AgentConfigs agent, List<Message> messages, Action<ResponseLLM> onResponse = null)
+        {
+            //TODO: CORRIGIR A ENTRADA DE DADOS
+            AgentRequest newRequest = agent.GetRequest();
+            newRequest.messages = messages;
+            string jsonPayload = JsonUtility.ToJson(newRequest);
 
             // Corrige campos faltando do JsonUtility (como null e arrays)
             jsonPayload = jsonPayload.Replace("\"stop\":\"\"", "\"stop\":null");

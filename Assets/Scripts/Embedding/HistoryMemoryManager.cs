@@ -66,7 +66,7 @@ namespace Guizan.LLM.Embedding
         {
             string chunkText = embeddings.TextChunks[chunkIndex];
             string prompt = $"Agora leve em consideração na hora de responder ao usuário essa história do personagem que você está interpertando:\n\"{chunkText}\"";
-            return new Message("system", prompt);
+            return new Message(MessageRole.system, prompt);
         }
     }
 }
