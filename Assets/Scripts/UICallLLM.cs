@@ -14,6 +14,8 @@ public class UICallLLM : MonoBehaviour
     private TextMeshProUGUI textBox;
     [SerializeField]
     private Button sendButton;
+    [SerializeField]
+    private Button startButton;
 
     [Space]
     [SerializeField]
@@ -27,12 +29,45 @@ public class UICallLLM : MonoBehaviour
     private void OnEnable()
     {
         sendButton.onClick.AddListener(CallLLM);
+        startButton.onClick.AddListener(ConversationToggle);
+        SetStartBtnArt(false);
         if (agent == null)
         {
             Debug.LogError("Agente não encontrado");
             return;
         }
         agent.AnswerEvent.AddListener(PrintLLMAnswer);
+    }
+
+    private void ConversationToggle()
+    {
+        if (agentTalk.InConversation)
+            agentTalk.EndConversation();
+        else
+            agentTalk.StartConversation();
+
+        SetStartBtnArt(agentTalk.InConversation);
+    }
+
+    private void SetStartBtnArt(bool status)
+    {
+        ColorBlock cb = startButton.colors;
+        TextMeshProUGUI buttonText = startButton.GetComponentInChildren<TextMeshProUGUI>();
+        if (!status)
+        {
+            cb.normalColor = Color.gray9;
+            cb.selectedColor = Color.gray9;
+            buttonText.color = Color.black;
+            buttonText.text = "Start";
+        }
+        else
+        {
+            cb.normalColor = Color.gray;
+            cb.selectedColor = Color.gray;
+            buttonText.color = Color.white;
+            buttonText.text = "End";
+        }
+        startButton.colors = cb;
     }
 
     void Start()
@@ -94,6 +129,7 @@ public class UICallLLM : MonoBehaviour
     private void OnDisable()
     {
         sendButton.onClick.RemoveListener(CallLLM);
+        startButton.onClick.RemoveListener(ConversationToggle);
         agent.AnswerEvent.RemoveListener(PrintLLMAnswer);
     }
 }

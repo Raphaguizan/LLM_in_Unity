@@ -78,7 +78,8 @@ namespace Guizan.LLM.Embedding
         private void ResetSavedEmbeddins()
         {
             AgentJSONSaver<AgentEmbedding>.ClearJSON(FileName);
-            myEmbedding.SetEmpty();
+            if(myEmbedding != null)
+                myEmbedding.SetEmpty();
         }
 
         private void OnValidate()

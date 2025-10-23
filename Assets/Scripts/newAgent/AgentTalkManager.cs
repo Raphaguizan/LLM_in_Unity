@@ -3,6 +3,8 @@ using UnityEngine;
 using NaughtyAttributes;
 using System;
 using Guizan.LLM.Embedding;
+using System.Linq;
+using UnityEngine.Events;
 
 namespace Guizan.LLM.Agent
 {
@@ -11,34 +13,85 @@ namespace Guizan.LLM.Agent
     {
         [SerializeField, ResizableTextArea, Tooltip("Frase que será enviada caso ocorra algum erroe o request não retornar Success.")]
         private string defaultMessage = "Error";
-        private AgentMemoryManager memory;
+
+
+        [SerializeField]
+        private List<Message> talkMemory;
+
+        private AgentMemoryManager memoryManager;
         private AgentEmbeddingManager embedding;
 
         private Action<string> responseCallBack;
+        
+        private bool inConversation;
+
+        public UnityEvent ConversationStartCallBack;
+        public UnityEvent<Message> ConversationEndCallBack;
+
+        [ShowNativeProperty]
+        public bool InConversation => inConversation;
 
         public string DefaultMessage => defaultMessage;
         private void Awake()
         {
             embedding = GetComponent<AgentEmbeddingManager>();
-            memory = GetComponent<AgentMemoryManager>();
+            memoryManager = GetComponent<AgentMemoryManager>();
+            inConversation = false;
             responseCallBack = null;
         }
+
+        public void StartConversation()
+        {
+            ConversationStartCallBack?.Invoke();
+            talkMemory.Clear();
+            inConversation = true;
+        }
+
+        public void EndConversation()
+        {
+            if (!inConversation || memoryManager == null)
+            {
+                inConversation = false;
+                return;
+            }
+            memoryManager.MakeTalkSumary(talkMemory, (sumarymessage) =>
+            {
+                memoryManager.AddMemory(sumarymessage);
+                ConversationEndCallBack?.Invoke(sumarymessage);
+                inConversation = false;
+            });
+        }
+
         public void SendMessage(string message, MessageRole role = MessageRole.user, Action<string> callback = null)
         {
-            Message newMessage = new(role, message);
-            List<Message> messages = new(){newMessage};
+            if (!inConversation)
+                StartConversation();
 
             responseCallBack = callback;
+            Message newMessage = new(role, message);
 
-            if (memory != null)
+            talkMemory.Add(newMessage);
+            List<Message> messages = talkMemory;
+
+            if (memoryManager != null)
             {
-                memory.AddMemory(newMessage);
-                messages = memory.Memory;
+                messages = memoryManager.Memory.Concat(talkMemory).ToList();
             }
 
             if (embedding != null)
             {
-                embedding.TestEmbedding(message, () => { GroqLLM.SendMessageToLLM(messages, ReceiveAnswer);});
+                embedding.TestEmbedding(message, (msg) => {
+                    if (msg != null && msg.Count > 0)
+                    {
+                        for (int i = 0; i < msg.Count; i++)
+                        {
+                            if (!talkMemory.Exists(a => a.content.Equals(msg[i].content)))
+                                talkMemory.Add(msg[i]);
+                            messages.Add(msg[i]);
+                        }
+                    }
+                    GroqLLM.SendMessageToLLM(messages, ReceiveAnswer);
+                });
                 return;
             }
 
@@ -51,14 +104,20 @@ namespace Guizan.LLM.Agent
             {
                 Debug.LogError(defaultMessage);  
                 response.responseText = defaultMessage;
+                EndConversation();
             } 
-            else if (memory != null)
+            else 
             {
-                memory.AddMemory(MessageRole.assistant, response.responseText);
+                talkMemory.Add(new(MessageRole.assistant, response.responseText));
             }
 
             responseCallBack?.Invoke(response.responseText);
             responseCallBack = null;
+        }
+
+        public void InsertTalkMemory(Message msg)
+        {
+            talkMemory.Add(msg);
         }
     }
 }

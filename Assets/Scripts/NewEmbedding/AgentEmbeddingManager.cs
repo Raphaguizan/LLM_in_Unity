@@ -1,6 +1,8 @@
 using Guizan.LLM.Agent;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 namespace Guizan.LLM.Embedding
@@ -10,30 +12,32 @@ namespace Guizan.LLM.Embedding
         [SerializeField, Range(0f, 1f)]
         private float similarityAccept = .5f;
 
-        [SerializeField]
-        AgentMemoryManager memoryManager = null;
+        //[SerializeField]
+        //AgentMemoryManager memoryManager = null;
 
         [SerializeField]
         private List<FileEmbedding> FileEmbeddings;
 
-        public void TestEmbedding(string textToTest, Action onEmbeddingResponse = null)
+        private List<Message> memoryResponse = new();
+
+        public void TestEmbedding(string textToTest, Action<List<Message>> onEmbeddingResponse = null)
         {
-            try
+            memoryResponse.Clear();
+            StartCoroutine(WaitMemoryResponse(textToTest, onEmbeddingResponse));
+        }
+
+        private IEnumerator WaitMemoryResponse(string textToTest, Action<List<Message>> onEmbeddingResponse)
+        {
+            int count = FileEmbeddings.Count;
+            MakeEmbedding(textToTest, (emb) =>
             {
-                MakeEmbedding(textToTest, (emb) =>
+                foreach (var embedding in FileEmbeddings)
                 {
-                    foreach (var embedding in FileEmbeddings)
-                    {
-                        TestFileEmbeddingSimilarity(emb, embedding);
-                    }
-                    onEmbeddingResponse();
-                });
-            }
-            catch (Exception e)
-            {
-                Debug.LogException(e);
-                onEmbeddingResponse();
-            }
+                    TestFileEmbeddingSimilarity(emb, embedding, () => count--);
+                }
+            });
+            yield return new WaitWhile(() => count > 0);
+            onEmbeddingResponse?.Invoke(memoryResponse);           
         }
 
         private void MakeEmbedding(string text, Action<AgentEmbedding> onCohereResponse)
@@ -50,7 +54,7 @@ namespace Guizan.LLM.Embedding
             });
         }
 
-        private void TestFileEmbeddingSimilarity(AgentEmbedding agentEmb, FileEmbedding fileEmb)
+        private void TestFileEmbeddingSimilarity(AgentEmbedding agentEmb, FileEmbedding fileEmb, Action callback = null)
         {
             try
             {
@@ -60,8 +64,9 @@ namespace Guizan.LLM.Embedding
                     Debug.Log($"score : {score}  Index : {index}\n\ntexto:\n{agentEmb.TextChunks[0]}");
                     if (score > similarityAccept)
                     {
-                        MakeSystemPrompt(fileEmb, index, AddEmbeddingMemory);
+                        AddEmbeddingMemory(MakeSystemPrompt(embeddings, index));
                     }
+                    callback?.Invoke();
                 });
             }
             catch (Exception e) 
@@ -72,22 +77,20 @@ namespace Guizan.LLM.Embedding
 
         }
 
-        private void MakeSystemPrompt(FileEmbedding fileEmb, int chunkIndex, Action<Message> messageResponse)
+        private Message MakeSystemPrompt(AgentEmbedding agentEmb, int chunkIndex)
         {
-            fileEmb.GetEmbeddings((emb) => {
-                string chunkText = emb.TextChunks[chunkIndex];
-                string prompt = $"Agora leve em consideração na hora de responder ao usuário essa história do personagem que você está interpertando:\n\"{chunkText}\"";
-                messageResponse.Invoke(new Message(MessageRole.system, prompt));
-            });
-            
+            string chunkText = agentEmb.TextChunks[chunkIndex];
+            string prompt = $"Agora leve em consideração na hora de responder ao usuário essa história do personagem que você está interpertando:\n\"{chunkText}\"";
+            return new Message(MessageRole.system, prompt); 
         }
 
         private void AddEmbeddingMemory(Message message)
         {
-            if (memoryManager == null)
+            memoryResponse.Add(message);
+            /*if (memoryManager == null)
                 return;
 
-            memoryManager.AddMemory(message);
+            memoryManager.AddMemory(message);*/
         }
     }
 }

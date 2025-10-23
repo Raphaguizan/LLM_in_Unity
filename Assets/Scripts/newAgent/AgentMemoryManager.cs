@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -65,6 +66,12 @@ namespace Guizan.LLM.Agent
             MemoryResetCallBack.Invoke();
         }
 
+        public void MakeTalkSumary(List<Message> talkMemory, Action<Message> onSumaryCallback)
+        {
+            talkMemory.Add(new(MessageRole.user, sumaryPrompt));
+            GroqLLM.SendMessageToLLM(talkMemory, (response) => onSumaryCallback?.Invoke(new(MessageRole.system, response.responseText)));
+        }
+
         /// <summary>
         /// Faz um resumo da conversa sem esperar o limite máximo de mensagens.
         /// Quando o jogador parar de interagir com o NPC ele saber que isso aconteceu e não apenas
@@ -98,12 +105,14 @@ namespace Guizan.LLM.Agent
             MemoryResetCallBack.Invoke();
         }
 
-        private Message GetLastAssistantMessage()
+        private Message GetLastAssistantMessage(List<Message> memory = null)
         {
-            for (int i = Memory.Count - 1; i >= 0; i--)
+            memory ??= Memory;
+
+            for (int i = memory.Count - 1; i >= 0; i--)
             {
-                if (Memory[i].role.Equals(MessageRole.assistant))
-                    return Memory[i];
+                if (memory[i].role.Equals(MessageRole.assistant))
+                    return memory[i];
             }
             return null;
         }
