@@ -45,6 +45,35 @@ namespace Guizan.LLM.Embedding
             this.Embeddings = embeddings;
             this.TextChunks = chunks;
         }
+
+        public void SetEmpty()
+        {
+            TextChunks = null;
+            Embeddings = null;
+        }
+        public bool IsEmpty()
+        {
+            return Embeddings == null || Embeddings.Count == 0;
+        }
+
+        public override string ToString()
+        {
+            string text = "";
+            for (int i = 0; i < TextChunks.Count; i++)
+            {
+                text += " ";
+                text += TextChunks[i];
+            }
+            if (Embeddings != null)
+            {
+                if (Embeddings.Count > 0)
+                    text += "\nEmbedding index count = " + Embeddings.Count + " X " + Embeddings[0].Count;
+                else
+                    text += "no Embeddins!!!";
+            }
+
+            return text;
+        }
     }
 
     public class CohereEmbeddingClient : Singleton<CohereEmbeddingClient>

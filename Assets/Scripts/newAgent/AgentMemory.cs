@@ -23,12 +23,23 @@ namespace Guizan.LLM.Agent
         }
         public void AddMemory(Message newMessage)
         {
+            if (AlreadyInMemory(newMessage.content) && !newMessage.CompareRole(MessageRole.user))
+                return;
+
             memory.Add(newMessage);
         }
 
         public void AddMemory(Message newMessage, int index)
         {
+            if (AlreadyInMemory(newMessage.content) && !newMessage.CompareRole(MessageRole.user))
+                return;
+
             memory.Insert(index, newMessage);
+        }
+
+        private bool AlreadyInMemory(string test)
+        {
+            return memory.Exists((i) => i.content.Equals(test));
         }
 
         public void ResetMemories()

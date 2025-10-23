@@ -1,4 +1,5 @@
 using Guizan.LLM.Utils;
+using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,15 +19,21 @@ namespace Guizan.LLM.Embedding
 
         private AgentEmbedding myEmbedding = default;
 
-        public void GetEmbeddins(Action<AgentEmbedding> onResponse)
+        public void GetEmbeddings(Action<AgentEmbedding> onResponse)
         {
             if (archive == null)
+            {
+                Debug.LogWarning("arquivo nulo");
+                onResponse?.Invoke(default);
                 return;
+            }
 
             // retorna o embedding caso esteja na memória
-            if(myEmbedding != default)
+            if(!myEmbedding.IsEmpty())
             {
-                onResponse(myEmbedding);
+                Debug.LogWarning(myEmbedding);
+                Debug.LogWarning("embedding está na memória: "+myEmbedding.ToString());
+                onResponse?.Invoke(myEmbedding);
                 return;
             }
 
@@ -71,7 +78,7 @@ namespace Guizan.LLM.Embedding
         private void ResetSavedEmbeddins()
         {
             AgentJSONSaver<AgentEmbedding>.ClearJSON(FileName);
-            myEmbedding = default;
+            myEmbedding.SetEmpty();
         }
 
         private void OnValidate()
@@ -85,7 +92,9 @@ namespace Guizan.LLM.Embedding
 
         private void Reset()
         {
-            testChange = archive;
+            ResetSavedEmbeddins();
+            testChange = null; 
+            archive = null;
         }
     }
 }

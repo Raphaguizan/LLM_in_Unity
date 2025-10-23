@@ -409,7 +409,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &237956274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,18 +423,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   memoryTotalLenght: 10
-  sumaryPrompt: "Voc\xEA est\xE1 interagindo com um jogador por meio de um personagem
-    (NPC) em um jogo. O que foi conversado at\xE9 agora n\xE3o ser\xE1 enviado novamente.
-    A partir desta mensagem, quero que voc\xEA gere um resumo conciso da conversa
-    anterior.\r\n\r\nEsse resumo deve servir como uma mem\xF3ria para o NPC, contendo
-    apenas os fatos importantes, inten\xE7\xF5es, decis\xF5es ou sentimentos relevantes
-    que o jogador demonstrou.\r\n\r\nIgnore cumprimentos, piadas ou partes irrelevantes.\r\n\r\nEscreva
-    o resumo como se fosse uma nota pessoal do NPC para lembrar o que aconteceu at\xE9
-    agora. Use frases curtas, diretas, no estilo de t\xF3picos.\r\n\r\nExemplo:\r\n-
-    O jogador contou que foi expulso da col\xF4nia Aurora por questionar a lideran\xE7a.\r\n-
-    Est\xE1 procurando pistas sobre um artefato chamado Prisma Sombrio.\r\n- Pediu
-    ajuda para encontrar um engenheiro chamado Drax.\r\n\r\nAgora, por favor, resuma
-    a conversa at\xE9 este ponto.\r\n"
 --- !u!114 &237956275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -866,7 +854,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &543732418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -880,18 +868,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   memoryTotalLenght: 50
-  sumaryPrompt: "Voc\xEA est\xE1 interagindo com um jogador por meio de um personagem
-    (NPC) em um jogo. O que foi conversado at\xE9 agora n\xE3o ser\xE1 enviado novamente.
-    A partir desta mensagem, quero que voc\xEA gere um resumo conciso da conversa
-    anterior.\r\n\r\nEsse resumo deve servir como uma mem\xF3ria para o NPC, contendo
-    apenas os fatos importantes, inten\xE7\xF5es, decis\xF5es ou sentimentos relevantes
-    que o jogador demonstrou.\r\n\r\nIgnore cumprimentos, piadas ou partes irrelevantes.\r\n\r\nEscreva
-    o resumo como se fosse uma nota pessoal do NPC para lembrar o que aconteceu at\xE9
-    agora. Use frases curtas, diretas, no estilo de t\xF3picos.\r\n\r\nExemplo:\r\n-
-    O jogador contou que foi expulso da col\xF4nia Aurora por questionar a lideran\xE7a.\r\n-
-    Est\xE1 procurando pistas sobre um artefato chamado Prisma Sombrio.\r\n- Pediu
-    ajuda para encontrar um engenheiro chamado Drax.\r\n\r\nAgora, por favor, resuma
-    a conversa at\xE9 este ponto.\r\n"
 --- !u!114 &543732419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1208,6 +1184,7 @@ GameObject:
   - component: {fileID: 1042540422}
   - component: {fileID: 1042540424}
   - component: {fileID: 1042540425}
+  - component: {fileID: 1042540426}
   m_Layer: 0
   m_Name: NewAgent
   m_TagString: Untagged
@@ -1227,6 +1204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab62c45cee423e2408dd1c4ea512a8d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.Agent.AgentTalkManager
+  defaultMessage: Error
 --- !u!4 &1042540423
 Transform:
   m_ObjectHideFlags: 0
@@ -1302,6 +1280,26 @@ MonoBehaviour:
       mem\xF3rias, hist\xF3rico, humor atual, etc.) ser\xE3o fornecidas diretamente
       ou indiretamente pelo sistema. Adapte-se a essas informa\xE7\xF5es conforme
       necess\xE1rio.\n"
+  - role: system
+    content: "Thorgar pode parecer rude, mas sua alma foi moldada no calor da trag\xE9dia.
+      Por tr\xE1s da barba e da fuligem, h\xE1 um cora\xE7\xE3o que pulsa com o som
+      da bigorna."
+--- !u!114 &1042540426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042540420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d169ce3ed8e2a1e4c818a27b6df57cf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.Embedding.AgentEmbeddingManager
+  similarityAccept: 0.45
+  memoryManager: {fileID: 1042540424}
+  FileEmbeddings:
+  - {fileID: 11400000, guid: d36b4d2967475944f99d288b411614b5, type: 2}
 --- !u!1 &1200646197
 GameObject:
   m_ObjectHideFlags: 0

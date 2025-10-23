@@ -63,7 +63,7 @@ public class UICallLLM : MonoBehaviour
 
         // send data to script
         //agent.ReceiveText(text);
-        agentTalk.SendMessage(text);
+        agentTalk.SendMessage(text, callback: PrintLLMAnswer);
         ChangeWaitResponse(true);
         //MockReponseTime(3f);
     }

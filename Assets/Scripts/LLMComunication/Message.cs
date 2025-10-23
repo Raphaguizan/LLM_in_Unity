@@ -25,5 +25,10 @@ namespace Guizan.LLM
             this.role = role.ToString();
             this.content = content;
         }
+
+        public bool CompareRole(MessageRole roleToCompare)
+        {
+            return role.Equals(roleToCompare.ToString());
+        }
     }
 }

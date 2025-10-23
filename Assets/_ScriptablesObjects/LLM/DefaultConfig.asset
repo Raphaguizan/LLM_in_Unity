@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: DefaultConfig
   m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.LLMConfigs
   messages: []
-  model: gemma2-9b-it
+  model: openai/gpt-oss-20b
   temperature: 1
-  max_completion_tokens: 1024
+  max_completion_tokens: 256
   top_p: 1
   stream: 0
   stop: 
