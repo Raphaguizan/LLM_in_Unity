@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Start
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1442,6 +1442,7 @@ GameObject:
   - component: {fileID: 1042540424}
   - component: {fileID: 1042540425}
   - component: {fileID: 1042540426}
+  - component: {fileID: 1042540427}
   m_Layer: 0
   m_Name: NewAgent
   m_TagString: Untagged
@@ -1481,7 +1482,8 @@ Transform:
   m_LocalPosition: {x: 948.1734, y: 312.07578, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1466577120}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1042540424
@@ -1565,6 +1567,19 @@ MonoBehaviour:
   similarityAccept: 0.45
   FileEmbeddings:
   - {fileID: 11400000, guid: d36b4d2967475944f99d288b411614b5, type: 2}
+--- !u!114 &1042540427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042540420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48083be703473374fa564c9496ae9868, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.Agent.AgentTalkMemoryInjection
+  injectors: []
 --- !u!1 &1200646197
 GameObject:
   m_ObjectHideFlags: 0
@@ -1924,6 +1939,65 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1466577119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1466577120}
+  - component: {fileID: 1466577122}
+  - component: {fileID: 1466577121}
+  m_Layer: 0
+  m_Name: Injectors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1466577120
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466577119}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1042540423}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1466577121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466577119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7578c472b9c9274e9b5a78e21cc66ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.Agent.PlayerAppearanceInjector
+  injectManager: {fileID: 1042540427}
+--- !u!114 &1466577122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466577119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 139af0ccb6160e04ab38dd8a9cf5c93d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.Agent.InventoryInjector
+  injectManager: {fileID: 1042540427}
 --- !u!1 &1490401541
 GameObject:
   m_ObjectHideFlags: 0

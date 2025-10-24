@@ -25,7 +25,9 @@ namespace Guizan.LLM.Agent
         
         private bool inConversation;
 
+        [Foldout("Events")]
         public UnityEvent ConversationStartCallBack;
+        [Foldout("Events")]
         public UnityEvent<Message> ConversationEndCallBack;
 
         [ShowNativeProperty]
@@ -40,16 +42,21 @@ namespace Guizan.LLM.Agent
             responseCallBack = null;
         }
 
+        public void AddMemory(Message newMemory)
+        {
+            talkMemory.Add(newMemory);
+        }
+
         public void StartConversation()
         {
-            ConversationStartCallBack?.Invoke();
             talkMemory.Clear();
+            ConversationStartCallBack?.Invoke();
             inConversation = true;
         }
 
         public void EndConversation()
         {
-            if (!inConversation || memoryManager == null)
+            if (!inConversation || memoryManager == null || talkMemory.Count == 0)
             {
                 inConversation = false;
                 return;

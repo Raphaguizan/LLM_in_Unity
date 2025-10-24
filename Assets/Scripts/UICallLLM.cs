@@ -30,7 +30,6 @@ public class UICallLLM : MonoBehaviour
     {
         sendButton.onClick.AddListener(CallLLM);
         startButton.onClick.AddListener(ConversationToggle);
-        SetStartBtnArt(false);
         if (agent == null)
         {
             Debug.LogError("Agente não encontrado");
@@ -42,15 +41,20 @@ public class UICallLLM : MonoBehaviour
     private void ConversationToggle()
     {
         if (agentTalk.InConversation)
+        {
             agentTalk.EndConversation();
+            StartCoroutine(SetStartBtnArt(false));
+        }
         else
+        {
             agentTalk.StartConversation();
-
-        SetStartBtnArt(agentTalk.InConversation);
+            StartCoroutine(SetStartBtnArt(true));
+        }
     }
 
-    private void SetStartBtnArt(bool status)
+    private IEnumerator SetStartBtnArt(bool status)
     {
+        yield return new WaitUntil(()=> agentTalk.InConversation == status);
         ColorBlock cb = startButton.colors;
         TextMeshProUGUI buttonText = startButton.GetComponentInChildren<TextMeshProUGUI>();
         if (!status)
