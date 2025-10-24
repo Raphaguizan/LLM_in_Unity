@@ -18,7 +18,7 @@ namespace Guizan.LLM.Agent
             talkManager.ConversationStartCallBack.AddListener(InjectMemory);
         }
 
-        public void Subscribbe(TalkInjector injector)
+        public void Subscribe(TalkInjector injector)
         {
             injectors.Add(injector);
         }

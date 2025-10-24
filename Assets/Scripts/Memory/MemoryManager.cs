@@ -5,9 +5,10 @@ using UnityEngine;
 
 namespace Guizan.LLM.Memory
 {
-    [RequireComponent(typeof(LLMAgent))]
+    //[RequireComponent(typeof(LLMAgent))]
     public class MemoryManager : MonoBehaviour
     {
+        /*
         [SerializeField]
         private int memoryTotalLenght = 50;
 
@@ -111,6 +112,6 @@ namespace Guizan.LLM.Memory
         {
             llmAgentConfigs.MessagesChangeEvent.RemoveAllListeners();
             SaveMemory();
-        }
+        }*/
     }
 }

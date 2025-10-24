@@ -9,7 +9,7 @@ namespace Guizan.LLM.Agent
 
         protected virtual void Awake()
         {
-            injectManager.Subscribbe(this);
+            injectManager.Subscribe(this);
         }
 
         public virtual string GetTextToInject()

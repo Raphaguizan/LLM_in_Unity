@@ -69,7 +69,7 @@ namespace Guizan.LLM.Agent
         public void MakeTalkSumary(List<Message> talkMemory, Action<Message> onSumaryCallback)
         {
             talkMemory.Add(new(MessageRole.user, sumaryPrompt));
-            GroqLLM.SendMessageToLLM(talkMemory, (response) => onSumaryCallback?.Invoke(new(MessageRole.system, response.responseText)));
+            GroqLLM.SendMessageToLLM(talkMemory, (response) => onSumaryCallback?.Invoke(new(MessageRole.system, response.GetFullText())));
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Guizan.LLM.Agent
         private void ReceiveSumary(ResponseLLM response)
         {
             myMemory.ResetMemories();
-            AddMemory(new(MessageRole.system, response.responseText));
+            AddMemory(new(MessageRole.system, response.GetFullText()));
 
             if (lastAssistantMessage != null)
                 AddMemory(lastAssistantMessage);

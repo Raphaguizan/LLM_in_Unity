@@ -5,6 +5,7 @@ using System.Collections;
 using Guizan.LLM;
 using NaughtyAttributes;
 using Guizan.LLM.Agent;
+using System.Collections.Generic;
 
 public class UICallLLM : MonoBehaviour
 {
@@ -19,8 +20,6 @@ public class UICallLLM : MonoBehaviour
 
     [Space]
     [SerializeField]
-    private LLMAgent agent;
-    [SerializeField]
     private AgentTalkManager agentTalk;
 
 
@@ -30,12 +29,6 @@ public class UICallLLM : MonoBehaviour
     {
         sendButton.onClick.AddListener(CallLLM);
         startButton.onClick.AddListener(ConversationToggle);
-        if (agent == null)
-        {
-            Debug.LogError("Agente não encontrado");
-            return;
-        }
-        agent.AnswerEvent.AddListener(PrintLLMAnswer);
     }
 
     private void ConversationToggle()
@@ -90,32 +83,13 @@ public class UICallLLM : MonoBehaviour
 
     private void CallLLM()
     {
-        if (agent == null)
-        {
-            Debug.LogError("Agente não encontrado");
-            return;
-        }
-
         string text = inputField.text;
         if (text.Equals(string.Empty))
             return;
 
         // send data to script
-        //agent.ReceiveText(text);
         agentTalk.SendMessage(text, callback: PrintLLMAnswer);
         ChangeWaitResponse(true);
-        //MockReponseTime(3f);
-    }
-
-    private void MockReponseTime(float time)
-    {
-        StartCoroutine(MockResponseTimeCourotine(time));
-    }
-
-    private IEnumerator MockResponseTimeCourotine(float time)
-    {
-        yield return new WaitForSeconds(time);
-        ChangeWaitResponse(false);
     }
 
     private void ChangeWaitResponse(bool val)
@@ -125,15 +99,20 @@ public class UICallLLM : MonoBehaviour
         if (!val) inputField.text = "";
     }
 
-    private void PrintLLMAnswer(string resp)
+    private void PrintLLMAnswer(List<string> resp)
     {
-        textBox.text = resp;
+        Debug.Log("recebi:\n" + resp[0]);
+        string text = "";
+        for (int i = 0; i < resp.Count; i++)
+        {
+            text += resp[i]+"\n";
+        }
+        textBox.text = text;
         ChangeWaitResponse(false);
     }
     private void OnDisable()
     {
         sendButton.onClick.RemoveListener(CallLLM);
         startButton.onClick.RemoveListener(ConversationToggle);
-        agent.AnswerEvent.RemoveListener(PrintLLMAnswer);
     }
 }

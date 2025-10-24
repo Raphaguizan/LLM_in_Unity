@@ -20,8 +20,9 @@ namespace Guizan.LLM.Agent
 
         private AgentMemoryManager memoryManager;
         private AgentEmbeddingManager embedding;
+        private AgentActionsManager actionsManager;
 
-        private Action<string> responseCallBack;
+        private Action<List<string>> responseCallBack;
         
         private bool inConversation;
 
@@ -38,6 +39,7 @@ namespace Guizan.LLM.Agent
         {
             embedding = GetComponent<AgentEmbeddingManager>();
             memoryManager = GetComponent<AgentMemoryManager>();
+            actionsManager = GetComponent<AgentActionsManager>();
             inConversation = false;
             responseCallBack = null;
         }
@@ -69,7 +71,7 @@ namespace Guizan.LLM.Agent
             });
         }
 
-        public void SendMessage(string message, MessageRole role = MessageRole.user, Action<string> callback = null)
+        public void SendMessage(string message, MessageRole role = MessageRole.user, Action<List<string>> callback = null)
         {
             if (!inConversation)
                 StartConversation();
@@ -107,24 +109,24 @@ namespace Guizan.LLM.Agent
 
         private void ReceiveAnswer(ResponseLLM response)
         {
+            Debug.Log("Receive:\n"+response.FullResponse);
+            List<string> pages = new();
             if(response.type == ResponseType.Error)
             {
                 Debug.LogError(defaultMessage);  
-                response.responseText = defaultMessage;
+                pages.Add(defaultMessage);
                 EndConversation();
             } 
             else 
             {
-                talkMemory.Add(new(MessageRole.assistant, response.responseText));
+                talkMemory.Add(new(MessageRole.assistant, response.GetFullText()));
+                pages = response.Pages;
+                if (actionsManager != null && response.Action.Type != "none")
+                    actionsManager.MakeAction(response.Action);
             }
 
-            responseCallBack?.Invoke(response.responseText);
+            responseCallBack?.Invoke(pages);
             responseCallBack = null;
-        }
-
-        public void InsertTalkMemory(Message msg)
-        {
-            talkMemory.Add(msg);
         }
     }
 }

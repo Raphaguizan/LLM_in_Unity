@@ -31,8 +31,8 @@ namespace Guizan.LLM.Embedding
             // retorna o embedding caso esteja na memória
             if(!myEmbedding.IsEmpty())
             {
-                Debug.LogWarning(myEmbedding);
-                Debug.LogWarning("embedding está na memória: "+myEmbedding.ToString());
+                //Debug.LogWarning(myEmbedding);
+                Debug.Log("embedding está na memória: "+myEmbedding.ToString());
                 onResponse?.Invoke(myEmbedding);
                 return;
             }

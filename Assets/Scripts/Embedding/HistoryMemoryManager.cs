@@ -7,9 +7,10 @@ using UnityEngine;
 
 namespace Guizan.LLM.Embedding
 {
-    [RequireComponent(typeof(LLMAgent))]
+    //[RequireComponent(typeof(LLMAgent))]
     public class HistoryMemoryManager : MonoBehaviour
     {
+        /*
         [SerializeField, Range(-1f, 1f)]
         private float similarityAccept = .5f;
         
@@ -67,6 +68,6 @@ namespace Guizan.LLM.Embedding
             string chunkText = embeddings.TextChunks[chunkIndex];
             string prompt = $"Agora leve em consideração na hora de responder ao usuário essa história do personagem que você está interpertando:\n\"{chunkText}\"";
             return new Message(MessageRole.system, prompt);
-        }
+        }*/
     }
 }

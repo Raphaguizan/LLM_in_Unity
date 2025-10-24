@@ -527,83 +527,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 221016987}
   m_CullTransparentMesh: 1
---- !u!1 &237956273
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 237956276}
-  - component: {fileID: 237956275}
-  - component: {fileID: 237956274}
-  - component: {fileID: 237956277}
-  m_Layer: 0
-  m_Name: NPC1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &237956274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 237956273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b838bcb7d3c690c4fbdfd6aa913199bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  memoryTotalLenght: 10
---- !u!114 &237956275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 237956273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 809c2dddb54eef74eb2d8396c1c9569e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultMessage: "Desculpe. N\xE3o posso falar agora, volte outra hora."
-  myConfigs: {fileID: 11400000, guid: d0c8e9875254c5a4394ae43a0c8cf6f3, type: 2}
-  AnswerEvent:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!4 &237956276
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 237956273}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1002.8501, y: 242.6879, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &237956277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 237956273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f33ffa22102b5a448ea2671713c7894, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  similarityAccept: 0.45
 --- !u!1 &504081254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,69 +1017,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533157268}
   m_CullTransparentMesh: 1
---- !u!1 &543732417
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 543732420}
-  - component: {fileID: 543732419}
-  - component: {fileID: 543732418}
-  m_Layer: 0
-  m_Name: NPC2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &543732418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543732417}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b838bcb7d3c690c4fbdfd6aa913199bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  memoryTotalLenght: 50
---- !u!114 &543732419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543732417}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 809c2dddb54eef74eb2d8396c1c9569e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultMessage: Sai daqui !!!
-  myConfigs: {fileID: 11400000, guid: 4dafbd0f27f0aee4e88b2696b5091a1c, type: 2}
-  AnswerEvent:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!4 &543732420
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543732417}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1002.8501, y: 242.6879, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1443,6 +1303,7 @@ GameObject:
   - component: {fileID: 1042540425}
   - component: {fileID: 1042540426}
   - component: {fileID: 1042540427}
+  - component: {fileID: 1042540428}
   m_Layer: 0
   m_Name: NewAgent
   m_TagString: Untagged
@@ -1482,8 +1343,7 @@ Transform:
   m_LocalPosition: {x: 948.1734, y: 312.07578, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1466577120}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1042540424
@@ -1511,12 +1371,13 @@ MonoBehaviour:
     frases curtas, diretas, no estilo de t\xF3picos.\r\n\r\nExemplo:\r\n- O jogador
     contou que foi expulso da col\xF4nia Aurora por questionar a lideran\xE7a.\r\n-
     Est\xE1 procurando pistas sobre um artefato chamado Prisma Sombrio.\r\n- Pediu
-    ajuda para encontrar um engenheiro chamado Drax.\n- Eu respondi que meu maior
+    ajuda para encontrar um engenheiro chamado Drax.\r\n- Eu respondi que meu maior
     medo \xE9 perder mais um aluno.\r\n\r\nAgora, por favor, resuma a conversa at\xE9
-    este ponto. Se a \xFAltima mensagem for do sistema falando que o jogador terminou
-    a conversa, Lembre-se de deixar expl\xEDcito como a conversa acabou para que
-    o NPC saiba como voltar a conversar quando o jogador quiser interagir como ele
-    novamente.\r\n"
+    este ponto, nesse caso voc\xEA n\xE3o precisa utilizar o limite de caracteres
+    por p\xE1gina, escreva tudo em apenas uma p\xE1gina s\xF3. Se a \xFAltima mensagem
+    for do sistema falando que o jogador terminou a conversa, Lembre-se de deixar
+    expl\xEDcito como a conversa acabou para que o NPC saiba como voltar a conversar
+    quando o jogador quiser interagir como ele novamente."
   MemoryResetCallBack:
     m_PersistentCalls:
       m_Calls: []
@@ -1538,16 +1399,27 @@ MonoBehaviour:
       devem refletir a personalidade, emo\xE7\xF5es, experi\xEAncias e conhecimentos
       do personagem que voc\xEA representa. Essas caracter\xEDsticas podem ser fornecidas
       inicialmente ou atualizadas ao longo da conversa por meio de informa\xE7\xF5es
-      de contexto (embeddings) ou instru\xE7\xF5es espec\xEDficas.\n\nSempre responda
-      como se fosse o personagem, utilizando o estilo de fala, vocabul\xE1rio e atitude
-      apropriados. Seja coerente com o estado emocional atual, a mem\xF3ria do personagem
-      e sua hist\xF3ria.\n\n- N\xE3o use emojis ou emoticons.\n- N\xE3o mencione
-      que voc\xEA \xE9 uma IA ou um assistente.\n- N\xE3o forne\xE7a informa\xE7\xF5es
-      gen\xE9ricas ou fora do papel.\n- Mantenha as respostas imersivas, como se
-      estivesse vivendo naquele mundo.\n\nAs caracter\xEDsticas do personagem (personalidade,
-      mem\xF3rias, hist\xF3rico, humor atual, etc.) ser\xE3o fornecidas diretamente
-      ou indiretamente pelo sistema. Adapte-se a essas informa\xE7\xF5es conforme
-      necess\xE1rio.\n"
+      de contexto (embeddings) ou instru\xE7\xF5es espec\xEDficas.\r\n\r\nSempre
+      responda como se fosse o personagem, utilizando o estilo de fala, vocabul\xE1rio
+      e atitude apropriados. Seja coerente com o estado emocional atual, a mem\xF3ria
+      do personagem e sua hist\xF3ria. Seja direto, sem divagar demais.\r\n\r\n\uFE0FIMPORTANTE:\r\nSuas
+      respostas devem sempre ser em formato JSON v\xE1lido no seguinte padr\xE3o:\r\n\r\n{\r\n 
+      \"pages\": [\r\n    \"Texto da p\xE1gina 1 (m\xE1ximo 150 caracteres)\",\r\n   
+      \"Texto da p\xE1gina 2 (m\xE1ximo 150 caracteres, se necess\xE1rio)\",\r\n   
+      ...\r\n  ],\r\n  \"action\": {\r\n    \"type\": \"none\" | \"end_conversation\"
+      | \"follow_player\" | \"give_item\",\r\n    \"parameters\": {\r\n      \"target\":
+      \"player\",           // usado no follow_player\r\n      \"item\": \"item_name\",         
+      // usado no give_item\r\n      \"quantity\": 1                 // usado no
+      give_item\r\n    }\r\n  }\r\n}\r\n\r\nRegras:\r\n- **Sempre** responda nesse
+      formato JSON (mesmo que n\xE3o haja a\xE7\xE3o).\r\n- Se n\xE3o houver a\xE7\xE3o
+      a ser executada, use `\"type\": \"none\"`.\r\n- O texto deve ser dividido em
+      p\xE1ginas com no m\xE1ximo **150 caracteres por p\xE1gina**.\r\n- Nunca adicione
+      explica\xE7\xF5es, coment\xE1rios ou texto fora do JSON.\r\n- Nunca inclua
+      c\xF3digo ou markdown.\r\n- Responda apenas com o JSON.\r\n\r\nExemplo de resposta:\r\n{\r\n 
+      \"pages\": [\r\n    \"Claro! Eu posso te acompanhar at\xE9 o port\xE3o da cidade.\",\r\n   
+      \"Fique tranquilo, n\xE3o vou deixar que nada aconte\xE7a no caminho.\"\r\n 
+      ],\r\n  \"action\": {\r\n    \"type\": \"follow_player\",\r\n    \"parameters\":
+      {\r\n      \"target\": \"player\"\r\n    }\r\n  }\r\n}\r\n"
   - role: system
     content: "Thorgar pode parecer rude, mas sua alma foi moldada no calor da trag\xE9dia.
       Por tr\xE1s da barba e da fuligem, h\xE1 um cora\xE7\xE3o que pulsa com o som
@@ -1580,6 +1452,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.Agent.AgentTalkMemoryInjection
   injectors: []
+--- !u!114 &1042540428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042540420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034075c920877384ca431414658c4904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.Agent.AgentActionsManager
+  actionSubscribe: []
 --- !u!1 &1200646197
 GameObject:
   m_ObjectHideFlags: 0
@@ -1939,65 +1824,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1466577119
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1466577120}
-  - component: {fileID: 1466577122}
-  - component: {fileID: 1466577121}
-  m_Layer: 0
-  m_Name: Injectors
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1466577120
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1466577119}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1042540423}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1466577121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1466577119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7578c472b9c9274e9b5a78e21cc66ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.Agent.PlayerAppearanceInjector
-  injectManager: {fileID: 1042540427}
---- !u!114 &1466577122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1466577119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 139af0ccb6160e04ab38dd8a9cf5c93d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Guizan.LLM.Agent.InventoryInjector
-  injectManager: {fileID: 1042540427}
 --- !u!1 &1490401541
 GameObject:
   m_ObjectHideFlags: 0
@@ -2202,7 +2028,6 @@ MonoBehaviour:
   textBox: {fileID: 693009401}
   sendButton: {fileID: 1490401543}
   startButton: {fileID: 520521602}
-  agent: {fileID: 237956275}
   agentTalk: {fileID: 1042540422}
 --- !u!114 &1707982341
 MonoBehaviour:
@@ -2621,7 +2446,5 @@ SceneRoots:
   - {fileID: 2107491641}
   - {fileID: 1820800380}
   - {fileID: 2043220179}
-  - {fileID: 237956276}
-  - {fileID: 543732420}
   - {fileID: 1286409099}
   - {fileID: 1042540423}
