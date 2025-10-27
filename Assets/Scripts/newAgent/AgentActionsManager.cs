@@ -10,6 +10,12 @@ namespace Guizan.LLM.Agent
         [SerializeField]
         private List<AgentAction> actionSubscribe = new();
 
+
+        public void Subscribe(AgentAction action)
+        {
+            actionSubscribe.Add(action);
+        }
+
         public void MakeAction(LLMAction action)
         {
             Debug.Log("chamou a ação " + action.Type);
