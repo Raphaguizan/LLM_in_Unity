@@ -13,6 +13,9 @@ namespace Guizan.LLM.Agent
         [SerializeField, Expandable]
         private AgentMemory myMemory;
 
+        [Space, SerializeField]
+        private List<PermanentMemory> permanentMemoriesList;
+
         public List<Message> Memory => myMemory.Memory;
 
         private void Start()
@@ -41,6 +44,14 @@ namespace Guizan.LLM.Agent
             AddMemory(new(role, content));
         }
 
+        private void InjectPermanentMemory()
+        {
+            for (int i = 0; i < permanentMemoriesList.Count; i++)
+            {
+                AddMemory(permanentMemoriesList[i].Message, i);
+            }
+        }
+
         [SerializeField, Foldout("Memory Sumarize")]
         private int memoryTotalLenght = 50;
 
@@ -48,8 +59,6 @@ namespace Guizan.LLM.Agent
         private string sumaryPrompt = "Você está interagindo com um jogador por meio de um personagem (NPC) em um jogo. O que foi conversado até agora não será enviado novamente. A partir desta mensagem, quero que você gere um resumo conciso da conversa anterior.\r\n\r\nEsse resumo deve servir como uma memória para o NPC, contendo apenas os fatos importantes, intenções, decisões ou sentimentos relevantes que o jogador demonstrou.\r\n\r\nIgnore cumprimentos, piadas ou partes irrelevantes.\r\n\r\nEscreva o resumo como se fosse uma nota pessoal do NPC para lembrar o que aconteceu até agora. Use frases curtas, diretas, no estilo de tópicos.\r\n\r\nExemplo:\r\n- O jogador contou que foi expulso da colônia Aurora por questionar a liderança.\r\n- Está procurando pistas sobre um artefato chamado Prisma Sombrio.\r\n- Pediu ajuda para encontrar um engenheiro chamado Drax.\r\n\r\nAgora, por favor, resuma a conversa até este ponto.\r\n";
 
         private Message lastAssistantMessage = null;
-        [HideInInspector]
-        public UnityEvent MemoryResetCallBack;
 
         private void VerifyMemoryLenght()
         {
@@ -63,7 +72,7 @@ namespace Guizan.LLM.Agent
         public void ResetMemory()
         {
             myMemory.ResetMemories();
-            MemoryResetCallBack.Invoke();
+            InjectPermanentMemory();
         }
 
         public void MakeTalkSumary(List<Message> talkMemory, Action<Message> onSumaryCallback)
@@ -102,7 +111,7 @@ namespace Guizan.LLM.Agent
                 AddMemory(lastAssistantMessage);
 
             lastAssistantMessage = null;
-            MemoryResetCallBack.Invoke();
+            InjectPermanentMemory();
         }
 
         private Message GetLastAssistantMessage(List<Message> memory = null)
@@ -135,7 +144,7 @@ namespace Guizan.LLM.Agent
         {
             var newMemory = AgentJSONSaver<List<Message>>.LoadJSON(myMemory.ID, SavePathFolder.npc_Memory);
             if (newMemory == default)
-                MemoryResetCallBack.Invoke();
+                InjectPermanentMemory();
         }
 
         private void OnApplicationFocus(bool focus)
