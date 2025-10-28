@@ -2,7 +2,7 @@ using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Guizan.LLM.Agent
+namespace Guizan.LLM
 {
     [CreateAssetMenu(fileName = "newPermanentMemory", menuName = "LLM/Permanent memory")]
     public class PermanentMemory : ScriptableObject

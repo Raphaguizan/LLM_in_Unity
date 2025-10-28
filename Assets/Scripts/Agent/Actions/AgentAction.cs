@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Guizan.LLM.Agent
+namespace Guizan.LLM.Agent.Actions
 {
     public class AgentAction : MonoBehaviour, IAgentAction
     {

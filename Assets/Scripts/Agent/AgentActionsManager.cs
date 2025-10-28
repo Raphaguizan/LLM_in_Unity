@@ -1,4 +1,4 @@
-using Guizan.LLM.Actions;
+using Guizan.LLM.Agent.Actions;
 using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;

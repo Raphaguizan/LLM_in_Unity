@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Guizan.LLM.Actions
+namespace Guizan.LLM.Agent.Actions
 {
     /// <summary>
     /// Representa uma ação que o NPC deve executar.

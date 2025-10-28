@@ -1,4 +1,4 @@
-using Guizan.LLM.Actions;
+using Guizan.LLM.Agent.Actions;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using UnityEngine;

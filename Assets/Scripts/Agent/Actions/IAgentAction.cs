@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Guizan.LLM.Agent
+namespace Guizan.LLM.Agent.Actions
 {
     public interface IAgentAction
     {
