@@ -101,7 +101,7 @@ public class UICallLLM : MonoBehaviour
 
     private void PrintLLMAnswer(List<string> resp)
     {
-        Debug.Log("recebi:\n" + resp[0]);
+        //Debug.Log("recebi:\n" + resp[0]);
         string text = "";
         for (int i = 0; i < resp.Count; i++)
         {

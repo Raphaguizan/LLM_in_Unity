@@ -32,7 +32,7 @@ namespace Guizan.LLM.Embedding
             if(!myEmbedding.IsEmpty())
             {
                 //Debug.LogWarning(myEmbedding);
-                Debug.Log("embedding está na memória: "+myEmbedding.ToString());
+                //Debug.Log("embedding está na memória: "+myEmbedding.ToString());
                 onResponse?.Invoke(myEmbedding);
                 return;
             }

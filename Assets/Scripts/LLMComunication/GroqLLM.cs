@@ -80,6 +80,7 @@ namespace Guizan.LLM
             if (request.result == UnityWebRequest.Result.Success)
             {
                 string answerJson = request.downloadHandler.text;
+                Debug.Log(answerJson.ExtractLLMMessage());
                 response.SetResponseData(answerJson.ExtractLLMMessage());
             }
             else

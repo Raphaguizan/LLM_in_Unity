@@ -1,5 +1,6 @@
 using Guizan.LLM.Agent.Actions;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,9 +27,19 @@ namespace Guizan.LLM
         {
             this.type = type;
             responseText = responseJson;
-            LLMResponseAction response = JsonConvert.DeserializeObject<LLMResponseAction>(responseJson);
-            pages = response.Pages;
-            action = response.Action;
+            try
+            {
+                LLMResponseAction response = JsonConvert.DeserializeObject<LLMResponseAction>(responseJson);
+                pages = response.Pages;
+                action = response.Action;
+            }
+            catch(Exception e)
+            {
+                Debug.LogException(e);
+                pages = new();
+                action = new();
+            }
+            
         }
         public string GetFullText()
         {

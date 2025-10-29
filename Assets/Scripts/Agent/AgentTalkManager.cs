@@ -109,7 +109,7 @@ namespace Guizan.LLM.Agent
 
         private void ReceiveAnswer(ResponseLLM response)
         {
-            Debug.Log("Receive:\n"+response.FullResponse);
+            //Debug.Log("Receive:\n"+response.FullResponse);
             List<string> pages = new();
             if(response.type == ResponseType.Error)
             {
